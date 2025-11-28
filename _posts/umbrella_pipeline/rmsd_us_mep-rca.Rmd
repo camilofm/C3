@@ -1,0 +1,487 @@
+---
+title: "QM/MM Umbrella RMSD analysis (base R)"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+# Solo base R, sin paquetes externos
+```
+
+# 1. Lectura y organización de los datos
+
+Este documento asume que en el **directorio de trabajo** están los archivos de RMSD generados por VMD:
+
+- `nXXX_eq_rmsd_PROA_DON_ACC.dat`
+- `pXXX_eq_rmsd_PROA_DON_ACC.dat`
+
+Cada archivo tiene:
+
+- una línea de comentario que comienza con `#`
+- columnas sin encabezado: `frame`, `rmsd_prot`, `rmsd_don`, `rmsd_acc`
+
+Además, a partir del input de CHARMM:
+
+- `timestep 0.001` ps (1 fs)
+- `nsavc 100` (se escribe cada 100 pasos)
+
+por lo tanto, el intervalo entre frames guardados es:
+
+- `dt_save = 0.001 ps * 100 = 0.1 ps`
+
+Es decir, cada frame corresponde a 0.1 ps.
+
+```{r read-data}
+# Archivos de RMSD (ventanas n*** y p***)
+rmsd_files <- list.files(pattern = "rmsd_PROA_DON_ACC.dat")
+
+if (length(rmsd_files) == 0) {
+  stop("No se encontraron archivos *_rmsd_PROA_DON_ACC.dat en el directorio de trabajo.")
+}
+
+# Función para leer un archivo y añadir el id de ventana
+read_rmsd_file_base <- function(fname) {
+  df <- read.table(
+    fname,
+    header = FALSE,
+    comment.char = "#"
+  )
+  colnames(df) <- c("frame", "rmsd_prot", "rmsd_don", "rmsd_acc")
+
+  # extraer id de ventana, p.ej. n182 o p003 de 'n182_eq_rmsd_PROA_DON_ACC.dat'
+  win_id <- sub("^([np][0-9]+)_.*$", "\\1", fname)
+
+  df$window <- win_id
+  df
+}
+
+# leemos y combinamos todo
+rmsd_all <- do.call(rbind, lapply(rmsd_files, read_rmsd_file_base))
+
+# Convertimos columnas importantes por si acaso
+rmsd_all$frame      <- as.numeric(rmsd_all$frame)
+rmsd_all$rmsd_prot  <- as.numeric(rmsd_all$rmsd_prot)
+rmsd_all$rmsd_don   <- as.numeric(rmsd_all$rmsd_don)
+rmsd_all$rmsd_acc   <- as.numeric(rmsd_all$rmsd_acc)
+rmsd_all$window     <- as.character(rmsd_all$window)
+
+# Definimos dt a partir del input de CHARMM
+dt_ps   <- 0.001  # tamaño de paso de integración (ps)
+nsavc   <- 100    # se guarda cada 100 pasos
+dt_save <- dt_ps * nsavc  # intervalo entre frames guardados (ps)
+
+# Añadimos columna de tiempo en ps
+rmsd_all$time_ps <- rmsd_all$frame * dt_save
+
+# Chequeo rápido
+str(rmsd_all)
+
+# Ventanas disponibles (n*** y p***)
+windows <- sort(unique(rmsd_all$window))
+windows
+```
+
+# 2. Gráficos globales (todas las ventanas n y p)
+
+En esta sección se generan **tres gráficos principales**, uno por especie:
+
+1. RMSD de la proteína (backbone PROA)  
+2. RMSD del donor (segid DON)  
+3. RMSD del acceptor (segid ACC)  
+
+Cada gráfico incluye todas las ventanas, con un color distinto para cada una.
+
+La leyenda se ubica a la **derecha y fuera del área de trazado**, para evitar superposición con las curvas.
+
+```{r define-colors}
+n_win <- length(windows)
+cols  <- grDevices::rainbow(n_win)
+```
+
+## 2.1 RMSD proteína (backbone PROA)
+
+```{r global-prot}
+xrange <- range(rmsd_all$time_ps, na.rm = TRUE)
+yrange <- range(rmsd_all$rmsd_prot, na.rm = TRUE)
+
+old_par <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 10), xpd = TRUE)  # margen derecho extra para la leyenda
+
+plot(
+  NA,
+  xlim = xrange,
+  ylim = yrange,
+  xlab = "time (ps)",
+  ylab = "RMSD proteína (Å)",
+  main = "RMSD backbone PROA en todas las ventanas (n y p)"
+)
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+  lines(sub$time_ps, sub$rmsd_prot, col = cols[i])
+}
+
+legend(
+  "topright",
+  inset = c(-0.17, -0.02),
+  legend = windows,
+  col = cols,
+  lty = 1,
+  cex = 0.7,
+  bty = "n"
+)
+
+par(old_par)
+```
+
+## 2.2 RMSD donor (segid DON)
+
+```{r global-don}
+xrange <- range(rmsd_all$time_ps, na.rm = TRUE)
+yrange <- range(rmsd_all$rmsd_don, na.rm = TRUE)
+
+old_par <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 10), xpd = TRUE)
+
+plot(
+  NA,
+  xlim = xrange,
+  ylim = yrange,
+  xlab = "time (ps)",
+  ylab = "RMSD donor (Å)",
+  main = "RMSD DON en todas las ventanas (n y p)"
+)
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+  lines(sub$time_ps, sub$rmsd_don, col = cols[i])
+}
+
+legend(
+  "topright",
+  inset = c(-0.17, -0.02),
+  legend = windows,
+  col = cols,
+  lty = 1,
+  cex = 0.7,
+  bty = "n"
+)
+
+par(old_par)
+```
+
+## 2.3 RMSD acceptor (segid ACC)
+
+```{r global-acc}
+xrange <- range(rmsd_all$time_ps, na.rm = TRUE)
+yrange <- range(rmsd_all$rmsd_acc, na.rm = TRUE)
+
+old_par <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 10), xpd = TRUE)
+
+plot(
+  NA,
+  xlim = xrange,
+  ylim = yrange,
+  xlab = "time (ps)",
+  ylab = "RMSD acceptor (Å)",
+  main = "RMSD ACC en todas las ventanas (n y p)"
+)
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+  lines(sub$time_ps, sub$rmsd_acc, col = cols[i])
+}
+
+legend(
+  "topright",
+  inset = c(-0.17, -0.02),
+  legend = windows,
+  col = cols,
+  lty = 1,
+  cex = 0.7,
+  bty = "n"
+)
+
+par(old_par)
+```
+
+# 3. Gráficos secundarios por ventana (diagnóstico)
+
+En esta sección se generan:
+
+- un panel con todas las ventanas (prot + don + acc en cada una),
+- archivos de imagen individuales para **cada ventana**, guardados en una carpeta,
+- una función para inspeccionar una ventana específica en la sesión interactiva.
+
+## 3.1 Paneles para todas las ventanas
+
+```{r facet-like}
+n_win <- length(windows)
+
+# distribución de paneles
+ncol <- ceiling(sqrt(n_win))
+nrow <- ceiling(n_win / ncol)
+
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(nrow, ncol), mar = c(3, 3, 3, 1))
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+
+  xrange <- range(sub$time_ps, na.rm = TRUE)
+  yrange <- range(
+    c(sub$rmsd_prot, sub$rmsd_don, sub$rmsd_acc),
+    na.rm = TRUE
+  )
+
+  plot(
+    sub$time_ps, sub$rmsd_prot,
+    type = "l",
+    xlim = xrange,
+    ylim = yrange,
+    xlab = "time (ps)",
+    ylab = "RMSD (Å)",
+    main = w,
+    col = "blue"
+  )
+  lines(sub$time_ps, sub$rmsd_don, col = "red")
+  lines(sub$time_ps, sub$rmsd_acc, col = "orange")
+
+  legend(
+    "topleft",
+    legend = c("prot", "don", "acc"),
+    col = c("blue", "red", "orange"),
+    lty = 1,
+    cex = 0.7,
+    bty = "n"
+  )
+}
+
+par(old_par)
+```
+
+## 3.2 Guardar gráficos individuales por ventana en una carpeta
+
+```{r save-by-window}
+# Carpeta de salida
+out_dir <- "rmsd_por_ventana"
+if (!dir.exists(out_dir)) {
+  dir.create(out_dir)
+}
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+
+  fname <- file.path(out_dir, paste0("RMSD_", w, ".png"))
+  png(fname, width = 900, height = 700)
+
+  xrange <- range(sub$time_ps, na.rm = TRUE)
+  yrange <- range(
+    c(sub$rmsd_prot, sub$rmsd_don, sub$rmsd_acc),
+    na.rm = TRUE
+  )
+
+  plot(
+    sub$time_ps, sub$rmsd_prot,
+    type = "l",
+    xlim = xrange,
+    ylim = yrange,
+    xlab = "time (ps)",
+    ylab = "RMSD (Å)",
+    main = paste("RMSD por especie en ventana", w),
+    col = "blue"
+  )
+  lines(sub$time_ps, sub$rmsd_don, col = "red")
+  lines(sub$time_ps, sub$rmsd_acc, col = "orange")
+
+  legend(
+    "topleft",
+    legend = c("prot", "don", "acc"),
+    col = c("blue", "red", "orange"),
+    lty = 1,
+    cex = 0.9,
+    bty = "n"
+  )
+
+  dev.off()
+}
+
+out_dir
+```
+
+## 3.3 Función para una ventana específica (uso interactivo)
+
+```{r single-window-func}
+plot_window_rmsd_base <- function(win_id) {
+  sub <- rmsd_all[rmsd_all$window == win_id, ]
+  if (nrow(sub) == 0) {
+    stop(paste("No se encontró la ventana", win_id))
+  }
+
+  xrange <- range(sub$time_ps, na.rm = TRUE)
+  yrange <- range(
+    c(sub$rmsd_prot, sub$rmsd_don, sub$rmsd_acc),
+    na.rm = TRUE
+  )
+
+  plot(
+    sub$time_ps, sub$rmsd_prot,
+    type = "l",
+    xlim = xrange,
+    ylim = yrange,
+    xlab = "time (ps)",
+    ylab = "RMSD (Å)",
+    main = paste("RMSD por especie en ventana", win_id),
+    col = "blue"
+  )
+  lines(sub$time_ps, sub$rmsd_don, col = "red")
+  lines(sub$time_ps, sub$rmsd_acc, col = "orange")
+
+  legend(
+    "topleft",
+    legend = c("prot", "don", "acc"),
+    col = c("blue", "red", "orange"),
+    lty = 1,
+    cex = 0.9,
+    bty = "n"
+  )
+}
+
+# Uso sugerido en sesión interactiva:
+plot_window_rmsd_base("n205")
+plot_window_rmsd_base("p003")
+```
+
+```{r save-rmsd-global, echo=FALSE}
+# Guarda tres gráficos globales:
+#  - rmsd_global_prot.png
+#  - rmsd_global_don.png
+#  - rmsd_global_acc.png
+
+# ===== RMSD proteína (backbone PROA) =====
+png("rmsd_global_prot.png", width = 900, height = 700)
+
+xrange <- range(rmsd_all$time_ps, na.rm = TRUE)
+yrange <- range(rmsd_all$rmsd_prot, na.rm = TRUE)
+
+old_par <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 10), xpd = TRUE)
+
+plot(
+  NA,
+  xlim = xrange,
+  ylim = yrange,
+  xlab = "time (ps)",
+  ylab = "RMSD proteína (Å)",
+  main = "RMSD backbone PROA en todas las ventanas"
+)
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+  lines(sub$time_ps, sub$rmsd_prot, col = cols[i])
+}
+
+legend(
+  "topright",
+  inset = c(-0.17, -0.02),
+  legend = windows,
+  col = cols,
+  lty = 1,
+  cex = 0.7,
+  bty = "n"
+)
+
+par(old_par)
+dev.off()
+
+# ===== RMSD donor (segid DON) =====
+png("rmsd_global_don.png", width = 900, height = 700)
+
+xrange <- range(rmsd_all$time_ps, na.rm = TRUE)
+yrange <- range(rmsd_all$rmsd_don, na.rm = TRUE)
+
+old_par <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 10), xpd = TRUE)
+
+plot(
+  NA,
+  xlim = xrange,
+  ylim = yrange,
+  xlab = "time (ps)",
+  ylab = "RMSD donor (Å)",
+  main = "RMSD DON en todas las ventanas"
+)
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+  lines(sub$time_ps, sub$rmsd_don, col = cols[i])
+}
+
+legend(
+  "topright",
+  inset = c(-0.17, -0.02),
+  legend = windows,
+  col = cols,
+  lty = 1,
+  cex = 0.7,
+  bty = "n"
+)
+
+par(old_par)
+dev.off()
+
+# ===== RMSD acceptor (segid ACC) =====
+png("rmsd_global_acc.png", width = 900, height = 700)
+
+xrange <- range(rmsd_all$time_ps, na.rm = TRUE)
+yrange <- range(rmsd_all$rmsd_acc, na.rm = TRUE)
+
+old_par <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 10), xpd = TRUE)
+
+plot(
+  NA,
+  xlim = xrange,
+  ylim = yrange,
+  xlab = "time (ps)",
+  ylab = "RMSD acceptor (Å)",
+  main = "RMSD ACC en todas las ventanas"
+)
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rmsd_all[rmsd_all$window == w, ]
+  lines(sub$time_ps, sub$rmsd_acc, col = cols[i])
+}
+
+legend(
+  "topright",
+  inset = c(-0.17, -0.02),
+  legend = windows,
+  col = cols,
+  lty = 1,
+  cex = 0.7,
+  bty = "n"
+)
+
+par(old_par)
+dev.off()
+```
+
+# 4. Comentarios finales
+
+- El eje X ahora está en **tiempo (ps)** usando `dt = 0.001 ps` y `nsavc = 100`, por lo que `time = frame * 0.1 ps`.
+- Los tres gráficos globales muestran la estabilidad relativa de proteína, donor y acceptor en todas las ventanas (n y p), con leyendas ubicadas a la derecha fuera del área del gráfico.
+- En la carpeta `rmsd_por_ventana` se guardan automáticamente los gráficos individuales de cada ventana (prot + don + acc).
+- La función `plot_window_rmsd_base()` está disponible para inspeccionar ventanas específicas en una sesión interactiva de R.

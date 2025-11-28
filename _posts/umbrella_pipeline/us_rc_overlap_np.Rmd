@@ -1,0 +1,298 @@
+---
+title: "QM/MM Umbrella RC overlap (base R, n & p)"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+# Solo base R, sin paquetes externos
+```
+
+# 1. Lectura de archivos `.rc` y organización de datos
+
+Este documento asume que en el **directorio de trabajo** están los archivos de coordenada de reacción de cada ventana:
+
+- `nXXX.rc` (por ejemplo, `n008.rc`, `n205.rc`, etc.)
+- `pXXX.rc` (por ejemplo, `p003.rc`, `p050.rc`, etc.)
+
+Cada archivo contiene principalmente dos columnas numéricas:
+
+1. primera columna: tiempo en unidades de **paso** o tiempo interno (0, 10, 20, ...)  
+2. segunda columna: valor de la coordenada de reacción (RC)
+
+Algunas ventanas incluyen al final líneas extra con más de 2 columnas (estadísticos internos de CHARMM).  
+Estas líneas se ignoran automáticamente.
+
+A partir de tu input de dinámica:
+
+- `timestep 0.001` ps (1 fs por paso)  
+
+Interpretamos la primera columna como **número de pasos** y convertimos a tiempo en ps con:
+
+\\( t_{ps} = \\text{columna 1} \\times 0.001 \\)
+
+```{r read-rc}
+# Archivos .rc
+rc_files <- list.files(pattern = "rc$")
+
+if (length(rc_files) == 0) {
+  stop("No se encontraron archivos .rc en el directorio de trabajo.")
+}
+
+# Función para leer un archivo .rc (ignorando líneas con más de 2 columnas numéricas)
+read_rc_file <- function(fname, dt_ps = 0.001) {
+  lines <- readLines(fname)
+  # eliminar líneas vacías
+  lines <- lines[nzchar(trimws(lines))]
+
+  parsed <- lapply(lines, function(ln) {
+    toks <- strsplit(ln, " +")[[1]]
+    toks <- toks[nzchar(toks)]
+    if (length(toks) < 2) return(NULL)
+    vals <- suppressWarnings(as.numeric(toks[1:2]))
+    if (any(is.na(vals))) return(NULL)
+    vals
+  })
+
+  # filtrar NULL
+  parsed <- parsed[!vapply(parsed, is.null, logical(1))]
+  if (length(parsed) == 0) return(NULL)
+
+  mat <- do.call(rbind, parsed)
+  df <- data.frame(
+    time_raw = mat[, 1],
+    rc       = mat[, 2]
+  )
+
+  # tiempo en ps
+  df$time_ps <- df$time_raw * dt_ps
+
+  # id de ventana: nombre sin extensión (ej. "n008" de "n008.rc")
+  base  <- basename(fname)
+  parts <- strsplit(base, ".", fixed = TRUE)[[1]]
+  win_id <- parts[1]
+  df$window <- win_id
+
+  df
+}
+
+# Leer todos los .rc
+rc_list <- lapply(rc_files, read_rc_file)
+
+# Eliminar posibles NULL (por si algún archivo estaba vacío o sin líneas válidas)
+rc_list <- rc_list[!vapply(rc_list, is.null, logical(1))]
+
+if (length(rc_list) == 0) {
+  stop("No se pudo leer ningún dato válido desde los archivos .rc.")
+}
+
+rc_all <- do.call(rbind, rc_list)
+
+str(rc_all)
+
+# Ventanas disponibles
+windows <- sort(unique(rc_all$window))
+windows
+
+# Número de ventanas y colores
+n_win <- length(windows)
+cols  <- grDevices::rainbow(n_win)
+
+# Rango global de RC (lo usaremos para ejes consistentes)
+rc_range <- range(rc_all$rc, na.rm = TRUE)
+rc_range
+```
+
+# 2. Gráfico principal: solapamiento de ventanas (densidades de RC)
+
+En esta sección se genera el gráfico clave para evaluar el **solapamiento entre ventanas**:
+
+- Se calcula la densidad de RC para cada ventana.
+- Se superponen todas las densidades en un mismo gráfico.
+- Cada ventana se muestra con un color distinto y la leyenda se coloca a la derecha, fuera del área del gráfico.
+
+Además, se definen **límites manuales del eje X**, que puedes ajustar fácilmente.
+
+```{r global-density, fig.width=6, fig.height=4}
+# Límites manuales del eje X — ajusta estos valores según necesites
+x_min <- -3
+x_max <- 1
+
+# Calcular altura máxima de densidad para fijar el eje Y
+dens_max <- 0
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rc_all[rc_all$window == w, ]
+  if (nrow(sub) > 1) {
+    d <- density(sub$rc)
+    m <- max(d$y, na.rm = TRUE)
+    if (m > dens_max) dens_max <- m
+  }
+}
+
+# Función auxiliar: dibuja el gráfico de solapamiento en el dispositivo actual
+plot_overlap_rc <- function() {
+  old_par <- par(no.readonly = TRUE)
+  on.exit(par(old_par))
+
+  par(mar = c(5, 4, 4, 10), xpd = TRUE)
+
+  plot(
+    NA,
+    xlim = c(x_min, x_max),
+    ylim = c(0, dens_max),
+    xlab = "RC",
+    ylab = "Density",
+    main = "Umbrella windows overlap (RC density)"
+  )
+
+  for (i in seq_along(windows)) {
+    w   <- windows[i]
+    sub <- rc_all[rc_all$window == w, ]
+    if (nrow(sub) > 1) {
+      d <- density(sub$rc)
+      lines(d$x, d$y, col = cols[i])
+    }
+  }
+
+  legend(
+    "topright",
+    inset = c(-0.25, 0),
+    legend = windows,
+    col = cols,
+    lty = 1,
+    cex = 0.7,
+    bty = "n"
+  )
+}
+
+# 1) Gráfico para el HTML (knitr)
+plot_overlap_rc()
+
+# 2) Versión PNG en disco
+png("US_RC_overlap_np.png", width = 1200, height = 800, res = 150)
+plot_overlap_rc()
+dev.off()
+
+cat("Archivo PNG generado: US_RC_overlap_np.png\n")
+```
+
+# 3. Gráfico secundario: RC vs tiempo para todas las ventanas
+
+Como diagnóstico adicional, es útil ver cómo evoluciona la coordenada de reacción en el tiempo en cada ventana.
+
+```{r rc-vs-time-panel}
+n_win <- length(windows)
+
+# distribución de paneles
+ncol <- ceiling(sqrt(n_win))
+nrow <- ceiling(n_win / ncol)
+
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(nrow, ncol), mar = c(3, 3, 3, 1))
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rc_all[rc_all$window == w, ]
+
+  xrange <- range(sub$time_ps, na.rm = TRUE)
+  yrange <- range(sub$rc, na.rm = TRUE)
+
+  plot(
+    sub$time_ps, sub$rc,
+    type = "l",
+    xlim = xrange,
+    ylim = yrange,
+    xlab = "tiempo (ps)",
+    ylab = "RC",
+    main = w,
+    col  = "black"
+  )
+}
+
+par(old_par)
+```
+
+# 4. Gráficos individuales por ventana (histograma + densidad)
+
+En esta sección se generan, para cada ventana, gráficos individuales de la distribución de RC (histograma + curva de densidad) y se guardan en una carpeta.
+
+Aquí aseguramos que **todas las ventanas usen el mismo eje X**, de modo que las distribuciones sean comparables visualmente entre sí.
+
+```{r save-hist-by-window}
+out_dir <- "rc_hist_por_ventana"
+if (!dir.exists(out_dir)) {
+  dir.create(out_dir)
+}
+
+for (i in seq_along(windows)) {
+  w   <- windows[i]
+  sub <- rc_all[rc_all$window == w, ]
+
+  fname <- file.path(out_dir, paste0("RC_hist_", w, ".png"))
+  png(fname, width = 900, height = 700)
+
+  # Histograma con eje X fijo y comparable
+  hist(
+    sub$rc,
+    breaks = "FD",
+    freq   = FALSE,
+    main   = paste("Distribución de RC - ventana", w),
+    xlab   = "Coordenada de reacción (RC)",
+    ylab   = "Densidad",
+    xlim   = rc_range
+  )
+
+  # Densidad superpuesta, también recortada al mismo rango
+  if (nrow(sub) > 1) {
+    d <- density(sub$rc)
+    idx <- which(d$x >= rc_range[1] & d$x <= rc_range[2])
+    if (length(idx) > 0) {
+      lines(d$x[idx], d$y[idx], col = "red", lwd = 2)
+    }
+  }
+
+  dev.off()
+}
+
+out_dir
+```
+
+# 5. Función para inspeccionar una ventana específica (uso interactivo)
+
+```{r single-window-func}
+plot_rc_window <- function(win_id) {
+  sub <- rc_all[rc_all$window == win_id, ]
+  if (nrow(sub) == 0) {
+    stop(paste("No se encontró la ventana", win_id))
+  }
+
+  # RC vs tiempo
+  xrange <- range(sub$time_ps, na.rm = TRUE)
+  yrange <- range(sub$rc, na.rm = TRUE)
+
+  plot(
+    sub$time_ps, sub$rc,
+    type = "l",
+    xlim = xrange,
+    ylim = yrange,
+    xlab = "tiempo (ps)",
+    ylab = "RC",
+    main = paste("RC vs tiempo - ventana", win_id),
+    col  = "black"
+  )
+}
+
+# Uso sugerido en sesión interactiva, por ejemplo:
+plot_rc_window("p027")
+```
+
+# 6. Comentarios finales
+
+- El gráfico principal (Sección 2) muestra el **solapamiento de las ventanas de umbrella** a partir de las densidades de RC, con límites del eje X controlados por `x_min` y `x_max`.
+- Los paneles RC vs tiempo (Sección 3) ayudan a ver si cada ventana explora de forma estable alrededor de su centro.
+- Los histogramas individuales por ventana (Sección 4) usan **el mismo rango de RC en el eje X** (`rc_range`), lo que permite comparar fácilmente la anchura y posición de las distribuciones entre ventanas.
+- La función `plot_rc_window()` está disponible para inspeccionar ventanas específicas en una sesión interactiva de R.

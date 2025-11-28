@@ -1,0 +1,242 @@
+---
+title: "PMF limpia – ventanas umbrella RCA"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+# Solo base R
+```
+
+# 1. Lectura de la PMF de WHAM
+
+Este documento asume que en el **directorio de trabajo** existe el archivo:
+
+- `PMF_wham_mix.csv` (salida de `wham_rca_v6.py`)
+
+con dos columnas:
+
+- `xi`  (coordenada de reacción)
+- `PMF_kcal_mol`  (ΔG en kcal·mol⁻¹, referenciada al mínimo global)
+
+Si en tu caso el archivo tiene otro nombre (por ejemplo `PMF_wham_n.csv`),
+ajusta el valor de `pmf_file_in` más abajo.
+
+```{r read-pmf}
+# Nombre del archivo de entrada (puedes modificarlo si es necesario)
+pmf_file_in  <- "PMF_wham_mix.csv"
+
+# Lectura
+pmf_raw <- read.csv(pmf_file_in, stringsAsFactors = FALSE)
+
+str(pmf_raw)
+```
+
+# 2. Definir recorte de bordes y recalibrar ΔG
+
+En muchos casos los **puntos de los extremos** del perfil tienen poco muestreo y
+pueden estar contaminados por artefactos numéricos. Aquí definimos cuántos
+puntos eliminar al inicio y al final, y luego volvemos a fijar el cero de energía
+en el mínimo del segmento recortado.
+
+Modifica `drop_left` y `drop_right` si quieres ajustar el recorte.
+
+```{r clean-pmf}
+# Número de puntos a eliminar en cada extremo
+drop_left  <- 1   # puntos a eliminar al inicio
+drop_right <- 1   # puntos a eliminar al final
+
+n_tot <- nrow(pmf_raw)
+
+if (drop_left < 0 || drop_right < 0) {
+  stop("drop_left y drop_right deben ser >= 0")
+}
+
+if (drop_left + drop_right >= n_tot) {
+  stop("El recorte elimina todos los puntos. Ajusta drop_left / drop_right.")
+}
+
+# Índices que conservamos
+idx_keep <- seq(1 + drop_left, n_tot - drop_right)
+
+pmf_clean <- pmf_raw[idx_keep, , drop = FALSE]
+
+# Recalibrar ΔG: cero en el mínimo del segmento limpio
+dG_min <- min(pmf_clean$PMF_kcal_mol, na.rm = TRUE)
+pmf_clean$PMF_shift <- pmf_clean$PMF_kcal_mol - dG_min
+
+# Guardar versión limpia (puedes cambiar el nombre si quieres otra convención)
+pmf_file_out <- "PMF_wham_clean.csv"
+write.csv(pmf_clean, pmf_file_out, row.names = FALSE)
+
+pmf_clean[1:5, ]
+```
+
+# 3. PMF WHAM original (para referencia)
+
+```{r pmf-original, fig.width=6, fig.height=4}
+xi  <- pmf_raw$xi
+dG  <- pmf_raw$PMF_kcal_mol
+
+plot(
+  xi, dG,
+  type = "l",
+  xlab = expression(xi ~ "(Å)"),
+  ylab = expression(Delta*G ~ "(kcal·mol"^{-1}*")"),
+  main = "PMF WHAM original"
+)
+
+# Marcar en rojo los puntos recortados
+idx_left  <- if (drop_left > 0) seq_len(drop_left) else integer(0)
+idx_right <- if (drop_right > 0) seq(n_tot - drop_right + 1, n_tot) else integer(0)
+idx_drop  <- c(idx_left, idx_right)
+
+if (length(idx_drop) > 0) {
+  pts_drop <- pmf_raw[idx_drop, , drop = FALSE]
+
+  points(
+    pts_drop$xi,
+    pts_drop$PMF_kcal_mol,
+    pch = 19,
+    col = "red"
+  )
+}
+
+legend(
+  "topleft",
+  legend = c("perfil", "extremos recortados"),
+  lty = c(1, NA),
+  pch = c(NA, 19),
+  col = c("black", "red"),
+  bty = "n",
+  cex = 0.9
+)
+```
+
+# 4. PMF limpia con suavizado *spline* (spar = 0.5)
+
+En esta sección mostramos solo la región **limpia**, ya recortada y
+recalibrada (mínimo = 0). Se grafican:
+
+- los puntos crudos (círculos), y  
+- una curva suavizada usando `smooth.spline` con `spar = 0.5`.
+
+```{r pmf-clean-spline, fig.width=6.5, fig.height=4.5}
+xi_clean <- pmf_clean$xi
+dG_clean <- pmf_clean$PMF_shift
+
+# Ajuste spline con spar = 0.5 (puedes modificar spar si quieres más/menos suavizado)
+fit_spline <- smooth.spline(xi_clean, dG_clean, spar = 0.5)
+
+# Límites para tener algo de "aire" arriba y abajo
+ylim_range <- range(dG_clean, na.rm = TRUE)
+ylim_pad   <- 0.1 * diff(ylim_range)
+ylim_plot  <- c(ylim_range[1] - ylim_pad, ylim_range[2] + ylim_pad)
+
+plot(
+  xi_clean, dG_clean,
+  type = "p",
+  pch  = 21,
+  bg   = "white",
+  col  = "black",
+  xlab = expression(Coordenada~de~reaccion~xi~"(Å)"),
+  ylab = expression(Delta*G~"(kcal·mol"^{-1}*")"),
+  main = "PMF (ventanas umbrella RCA)",
+  ylim = ylim_plot
+)
+
+# Línea base en ΔG = 0
+abline(h = 0, col = "grey80", lty = "dashed")
+
+# Curva suavizada
+lines(fit_spline, col = "magenta", lwd = 2)
+
+legend(
+  "topleft",
+  legend = c("datos WHAM", "spline"),
+  pch    = c(21, NA),
+  pt.bg  = c("white", NA),
+  lty    = c(NA, 1),
+  col    = c("black", "magenta"),
+  bty    = "n",
+  cex    = 0.9
+)
+```
+
+# 5. Guardar figuras a archivo (opcional, pero útil)
+
+Si quieres conservar las figuras como PNG directamente desde este documento,
+puedes ejecutar este chunk (se volverán a dibujar los gráficos principales y se
+guardarán en archivos de imagen).
+
+```{r save-figures, eval=TRUE}
+# PMF original
+png("PMF_wham_original.png", width = 900, height = 700)
+plot(
+  xi, dG,
+  type = "l",
+  xlab = expression(xi ~ "(Å)"),
+  ylab = expression(Delta*G ~ "(kcal·mol"^{-1}*")"),
+  main = "PMF WHAM original"
+)
+if (length(idx_drop) > 0) {
+  points(
+    pts_drop$xi,
+    pts_drop$PMF_kcal_mol,
+    pch = 19,
+    col = "red"
+  )
+}
+legend(
+  "topleft",
+  legend = c("perfil", "extremos recortados"),
+  lty = c(1, NA),
+  pch = c(NA, 19),
+  col = c("black", "red"),
+  bty = "n",
+  cex = 0.9
+)
+dev.off()
+
+# PMF limpia + spline
+png("PMF_wham_clean_spline.png", width = 900, height = 700)
+plot(
+  xi_clean, dG_clean,
+  type = "p",
+  pch  = 21,
+  bg   = "white",
+  col  = "black",
+  xlab = expression(Coordenada~de~reaccion~xi~"(Å)"),
+  ylab = expression(Delta*G~"(kcal·mol"^{-1}*")"),
+  main = "PMF (ventanas umbrella RCA)",
+  ylim = ylim_plot
+)
+abline(h = 0, col = "grey80", lty = "dashed")
+lines(fit_spline, col = "magenta", lwd = 2)
+legend(
+  "topleft",
+  legend = c("datos WHAM", "spline"),
+  pch    = c(21, NA),
+  pt.bg  = c("white", NA),
+  lty    = c(NA, 1),
+  col    = c("black", "magenta"),
+  bty    = "n",
+  cex    = 0.9
+)
+dev.off()
+```
+
+# 6. Notas finales
+
+- El archivo `PMF_wham_clean.csv` contiene las columnas:
+  - `xi`: coordenada de reacción,
+  - `PMF_kcal_mol`: valor original de WHAM (ya recortado),
+  - `PMF_shift`: energía recalibrada con el mínimo del segmento limpio en 0.
+- Los parámetros `drop_left` y `drop_right` controlan cuántos puntos se
+  consideran artefactos de borde. Puedes ajustarlos y volver a *knit*.
+- El script funciona tanto si tu PMF proviene de ventanas solo negativas
+  como de un conjunto combinado de ventanas negativas y positivas, siempre
+  que el archivo de entrada tenga las columnas `xi` y `PMF_kcal_mol`.
