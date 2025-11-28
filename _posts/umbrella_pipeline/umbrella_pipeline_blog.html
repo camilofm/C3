@@ -1559,14 +1559,13 @@ Solo ejecuto:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> run_pipeline.sh</span></code></pre></div>
 <p>y obtengo:</p>
 <ul>
-<li>RMSD global, donor y acceptor<br />
+<li>RMSD global, donor y acceptor ( o los que tú requieras)<br />
 </li>
 <li>Gráfico de solapamiento de ventanas<br />
 </li>
 <li>PMF WHAM original<br />
 </li>
-<li>PMF limpio + spline<br />
-</li>
+<li>PMF limpio + spline suavizado</li>
 <li>Figuras PNG listas para manuscrito<br />
 </li>
 <li>Todos los CSV procesados<br />
@@ -1599,18 +1598,22 @@ Así no tengo que buscar nada después.</p></li>
 <hr />
 <h2 id="resultados-generados-automáticamente">Resultados generados automáticamente</h2>
 <h3 id="rmsd-global">RMSD global</h3>
+<p>Aquí un ejemplo de output para un RMSD de toda la proteína:</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="rmsd_global_prot.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
+<p>Aquí para un ligando:</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="rmsd_global_don.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<p><em>(Si también generas RMSD global para el acceptor, puedes añadir aquí <code>rmsd_global_acc.png</code> de la misma forma.)</em></p>
+<p><em>(Si también generas RMSD global para otro ligando, puedes añadir aquí <code>rmsd_global_xx.png</code> de la misma forma.)</em></p>
 <h3 id="solapamiento-umbrella">Solapamiento Umbrella</h3>
+<p>Aquí un ejemplo del output para el solapamiento de los umbrella:</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="US_RC_overlap_np.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <h3 id="pmf-wham-limpio-spline">PMF WHAM (limpio + spline)</h3>
+<p>Finalmente, aquí un ejemplo del output para el perfil de energía libre de Gibbs a través del cálculo PMF:</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="PMF_wham_clean_spline.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
@@ -1623,7 +1626,7 @@ Aquí va un extracto muy simplificado:</p>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">run_step</span> <span class="st">&quot;7. Copiar imágenes finales&quot;</span>   bash copy_outputs.sh</span></code></pre></div>
 <p>Todo está encapsulado en funciones y logs, así que si algo falla, el pipeline se detiene mostrando el paso exacto.</p>
 <hr />
-<h2 id="este-pipeline-es-útil-porque">Este pipeline es útil porque…</h2>
+<h2 id="este-pipeline-es-útil">Este pipeline es útil…</h2>
 <p>Porque evita una gran cantidad de pasos manuales que normalmente dispersan tiempo y energía.</p>
 <ul>
 <li>Evita errores humanos.<br />
@@ -1639,14 +1642,13 @@ Aquí va un extracto muy simplificado:</p>
 <p>Para mí se convirtió en una herramienta esencial dentro del trabajo QM/MM con enzimas.</p>
 <hr />
 <h2 id="descarga-de-los-scripts">Descarga de los scripts</h2>
-<p>He subido (o subiré) los archivos del pipeline a un repositorio de GitHub.<br />
+<p>He subido los archivos del pipeline a un repositorio de GitHub.<br />
 La idea es que puedas clonar el repo, adaptar un par de rutas y usarlo como base para tu propio sistema.</p>
 <p>🔗 <strong>Repositorio completo del pipeline</strong><br />
-<em>(cuando lo tenga público → reemplazo este link)</em></p>
-<p><a href="https://github.com/camilofm/umbrella-qmmm-pipeline" class="uri">https://github.com/camilofm/umbrella-qmmm-pipeline</a></p>
+<a href="https://github.com/camilofm/C3/tree/main/_posts/umbrella_pipeline" class="uri">https://github.com/camilofm/C3/tree/main/_posts/umbrella_pipeline</a></p>
 <hr />
 <h2 id="cierre">Cierre</h2>
-<p>Esta versión del pipeline ya es estable y la utilizo a diario.<br />
+<p>Esta versión del pipeline ya es estable y la utilizo muy seguido.<br />
 Si la adoptas, siéntete libre de modificarla, optimizarla o adaptarla a tus propios sistemas.<br />
 Y si quieres conversar sobre análisis QM/MM, Umbrella Sampling, TREK o rutas de reacción, siempre será un gusto.</p>
 <p><em>Camilo</em></p>

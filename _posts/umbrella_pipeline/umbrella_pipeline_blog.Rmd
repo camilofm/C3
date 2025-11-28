@@ -35,10 +35,10 @@ bash run_pipeline.sh
 
 y obtengo:
 
-- RMSD global, donor y acceptor  
+- RMSD global, donor y acceptor ( o los que tú requieras)  
 - Gráfico de solapamiento de ventanas  
 - PMF WHAM original  
-- PMF limpio + spline  
+- PMF limpio + spline suavizado 
 - Figuras PNG listas para manuscrito  
 - Todos los CSV procesados  
 - HTMLs de diagnóstico  
@@ -80,24 +80,31 @@ Cada paso queda registrado en `pipeline.log`, lo cual es muy útil para revisar 
 ## Resultados generados automáticamente
 
 ### RMSD global
+Aquí un ejemplo de output para un RMSD de toda la proteína:
 
 ```{r rmsd-prot, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("rmsd_global_prot.png")
 ```
 
+Aquí para un ligando:
+
 ```{r rmsd-don, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("rmsd_global_don.png")
 ```
 
-*(Si también generas RMSD global para el acceptor, puedes añadir aquí `rmsd_global_acc.png` de la misma forma.)*
+*(Si también generas RMSD global para otro ligando, puedes añadir aquí `rmsd_global_xx.png` de la misma forma.)*
 
 ### Solapamiento Umbrella
+
+Aquí un ejemplo del output para el solapamiento de los umbrella:
 
 ```{r overlap, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("US_RC_overlap_np.png")
 ```
 
 ### PMF WHAM (limpio + spline)
+
+Finalmente, aquí un ejemplo del output para el perfil de energía libre de Gibbs a través del cálculo PMF:
 
 ```{r pmf-clean, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("PMF_wham_clean_spline.png")
@@ -120,7 +127,7 @@ Todo está encapsulado en funciones y logs, así que si algo falla, el pipeline 
 
 ---
 
-## Este pipeline es útil porque...
+## Este pipeline es útil...
 
 Porque evita una gran cantidad de pasos manuales que normalmente dispersan tiempo y energía.
 
@@ -136,19 +143,17 @@ Para mí se convirtió en una herramienta esencial dentro del trabajo QM/MM con 
 
 ## Descarga de los scripts
 
-He subido (o subiré) los archivos del pipeline a un repositorio de GitHub.  
+He subido los archivos del pipeline a un repositorio de GitHub.  
 La idea es que puedas clonar el repo, adaptar un par de rutas y usarlo como base para tu propio sistema.
 
 🔗 **Repositorio completo del pipeline**  
-*(cuando lo tenga público → reemplazo este link)*
-
-https://github.com/camilofm/umbrella-qmmm-pipeline
+https://github.com/camilofm/C3/tree/main/_posts/umbrella_pipeline
 
 ---
 
 ## Cierre
 
-Esta versión del pipeline ya es estable y la utilizo a diario.  
+Esta versión del pipeline ya es estable y la utilizo muy seguido.  
 Si la adoptas, siéntete libre de modificarla, optimizarla o adaptarla a tus propios sistemas.  
 Y si quieres conversar sobre análisis QM/MM, Umbrella Sampling, TREK o rutas de reacción, siempre será un gusto.
 
