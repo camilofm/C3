@@ -1,7 +1,7 @@
 ---
 title: "Pipeline QM/MM para Umbrella Sampling: completamente automatizado"
 subtitle: "De datos crudos a ΔG en segundos"
-description: "Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."
+description: "Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."
 author:
   - name: "Dr. Camilo Febres-Molina"
     url: "https://github.com/camilofm"
@@ -10,6 +10,7 @@ date: "`r Sys.Date()`"
 output:
   distill::distill_article:
     self_contained: false
+image: "US_RC_overlap_np.png"
 ---
 
 <style>
@@ -18,128 +19,134 @@ body { text-align: justify; }
 
 ## Introducción
 
-En muchos trabajos de **dinámica molecular híbrida QM/MM**, calcular un
-perfil de energía libre (**PMF**) a partir de **Umbrella Sampling** es un
-proceso largo, repetitivo y propenso a errores manuales:
+Cuando trabajo con **Umbrella Sampling** acoplado a **QM/MM**, el análisis posterior puede volverse tedioso: copiar archivos desde el clúster, calcular RMSD por ventana, revisar solapamiento, preparar metadata, correr WHAM, limpiar extremos y finalmente obtener el perfil de energía libre (**PMF**).
 
-- copiar cientos de archivos del clúster,  
-- calcular RMSD de proteína, donor y acceptor,  
-- revisar solapamiento entre ventanas,  
-- generar metadata,  
-- correr WHAM,  
-- limpiar extremos,  
-- suavizar el perfil,  
-- exportar imágenes.  
+Y si el proyecto es grande, esto fácilmente se convierte en horas de trabajo repetitivo.
 
-Todo eso, *a mano*, consume horas.
+Por eso decidí construir un **pipeline completamente automatizado** que recibe los archivos crudos (`*.rc` y `*_eq.dcd`) y produce **todos los análisis y gráficos finales en aproximadamente 11 segundos**.  
+Solo ejecuto:
 
-En este post presento un **pipeline completamente automatizado** que
-desarrollé para procesar las ventanas del sistema
-QM/MM (PM6/CHARMM) en mi proyecto actual.  
-Una vez que tengo las ventanas `*.rc` y `*_eq.dcd` en una carpeta,
-el pipeline tarda **≈ 11 segundos** en entregar:
-
-- RMSD global, Donor y Acceptor (PNG)  
-- Solapamiento de ventanas (PNG)  
-- PMF original WHAM (PNG)  
-- PMF limpio + spline (PNG)  
-- Archivos CSV procesados  
-- HTML con diagnósticos  
-
-Todo ordenado automáticamente en una carpeta `resultados/`.
-
----
-
-## El pipeline: visión general
-
-El flujo completo está diseñado para ejecutarse con **un solo comando**:
-
-```
+```bash
 bash run_pipeline.sh
 ```
 
-Este script llama secuencialmente a:
+y obtengo:
 
-1. `rmsd_windows.tcl` — RMSD de PROA, DON, ACC  
-2. `rmsd_us_mep-rca.Rmd` — análisis y PNG  
-3. `us_rc_overlap_np.Rmd` — solapamiento (PNG)  
-4. `gen_metadata.sh` — metadata para WHAM  
-5. `wham_rca_v6.py` — WHAM + PMF original  
-6. `pmf_wham_final.Rmd` — PMF limpio + spline  
-7. Copia automática de PNG → carpeta `resultados/`
+- RMSD global, donor y acceptor  
+- Gráfico de solapamiento de ventanas  
+- PMF WHAM original  
+- PMF limpio + spline  
+- Figuras PNG listas para manuscrito  
+- Todos los CSV procesados  
+- HTMLs de diagnóstico  
+- Todo organizado en una carpeta `resultados/`
 
-Todas estas etapas están registradas en `pipeline.log`.
+Mi intención con este post es compartir la estructura y lógica del pipeline, por si a alguien más le resulta útil.
+
+---
+
+## ¿Qué hace exactamente el pipeline?
+
+El pipeline ejecuta automáticamente, en orden:
+
+1. **`rmsd_windows.tcl`**  
+   Calcula RMSD de la proteína (PROA), donor (DON) y acceptor (ACC) usando VMD.
+
+2. **`rmsd_us_mep-rca.Rmd`**  
+   Procesa esos RMSD, genera los gráficos globales y figuras por ventana.
+
+3. **`us_rc_overlap_np.Rmd`**  
+   Calcula el solapamiento entre ventanas y genera la figura de densidades.
+
+4. **`gen_metadata.sh`**  
+   Construye el metadata que WHAM necesita (centros y constantes de fuerza).
+
+5. **`wham_rca_v6.py`**  
+   Ejecuta WHAM 1D y produce el PMF crudo.
+
+6. **`pmf_wham_final.Rmd`**  
+   Limpia extremos, recalibra ΔG y genera la versión final con spline.
+
+7. **Copia automática de PNG a `resultados/`**  
+   Así no tengo que buscar nada después.
+
+Cada paso queda registrado en `pipeline.log`, lo cual es muy útil para revisar o depurar.
+
+---
+
+## Resultados generados automáticamente
+
+### RMSD global
+
+```{r rmsd-prot, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("rmsd_global_prot.png")
+```
+
+```{r rmsd-don, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("rmsd_global_don.png")
+```
+
+*(Si también generas RMSD global para el acceptor, puedes añadir aquí `rmsd_global_acc.png` de la misma forma.)*
+
+### Solapamiento Umbrella
+
+```{r overlap, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("US_RC_overlap_np.png")
+```
+
+### PMF WHAM (limpio + spline)
+
+```{r pmf-clean, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("PMF_wham_clean_spline.png")
+```
 
 ---
 
 ## Arquitectura del script maestro
 
-A continuación un extracto simplificado del script `run_pipeline.sh`:
+El corazón del flujo es `run_pipeline.sh`.  
+Aquí va un extracto muy simplificado:
 
 ```bash
-run_step "3. Generar solapamiento de RC" \
-  env RSTUDIO_PANDOC="$PANDOC_BIN" \
-  Rscript -e "rmarkdown::render('us_rc_overlap_np.Rmd', quiet = TRUE)"
+run_step "3. Generar solapamiento de RC"   env RSTUDIO_PANDOC="$PANDOC_BIN"   Rscript -e "rmarkdown::render('us_rc_overlap_np.Rmd', quiet = TRUE)"
 
-run_step "7. Copiar imágenes finales" \
-  bash copy_outputs.sh
+run_step "7. Copiar imágenes finales"   bash copy_outputs.sh
 ```
 
-El diseño modular permite ajustar fácilmente cualquier etapa sin romper
-las otras.
+Todo está encapsulado en funciones y logs, así que si algo falla, el pipeline se detiene mostrando el paso exacto.
 
 ---
 
-## Resultados producidos automáticamente
+## ¿Por qué es útil este pipeline?
 
-Los archivos finales que produce el pipeline incluyen:
+Porque evita una gran cantidad de pasos manuales que normalmente dispersan tiempo y energía.
 
-### ✔️ RMSD
-```
-rmsd_prot_all.png
-rmsd_don_all.png
-rmsd_acc_all.png
-```
+- Evita errores humanos.  
+- Hace el análisis reproducible.  
+- Permite reanalizar nuevas ventanas cambiando *solo un comando*.  
+- Produce figuras de calidad publicable sin intervención manual.  
+- Sirve como “plantilla” para futuros proyectos similares.  
 
-### ✔️ Solapamiento de las ventanas
-```
-us_overlap_density.png
-```
-
-### ✔️ PMF WHAM (crudo y limpio)
-```
-pmf_wham_original.png
-pmf_wham_clean.png
-```
-
-Todos se copian a:
-
-```
-resultados/
-```
+Para mí se convirtió en una herramienta esencial dentro del trabajo QM/MM con enzimas.
 
 ---
 
-## ¿Por qué este pipeline es valioso?
+## Descarga de los scripts
 
-- Ahorra **horas** de trabajo repetitivo.  
-- Elimina errores humanos en el copiado/pegado.  
-- Estándar reproducible para futuros artículos o estudiantes.  
-- Totalmente portable entre proyectos (solo cambiar nombres PSF/DCD).  
-- Produce figuras listas para un manuscrito.
+He subido (o subiré) los archivos del pipeline a un repositorio de GitHub.  
+La idea es que puedas clonar el repo, adaptar un par de rutas y usarlo como base para tu propio sistema.
 
-Este pipeline nació como herramienta interna, pero se ha convertido en
-parte fundamental de mi flujo de trabajo QM/MM para enzimas.
+🔗 **Repositorio completo del pipeline**  
+*(cuando lo tenga público → reemplazo este link)*
+
+https://github.com/camilofm/umbrella-qmmm-pipeline
 
 ---
 
-## Archivos y repositorio
+## Cierre
 
-Si te interesa ver el pipeline completo, todos los scripts interoperan:
+Esta versión del pipeline ya es estable y la utilizo a diario.  
+Si la adoptas, siéntete libre de modificarla, optimizarla o adaptarla a tus propios sistemas.  
+Y si quieres conversar sobre análisis QM/MM, Umbrella Sampling, TREK o rutas de reacción, siempre será un gusto.
 
-- Bash (control maestro)  
-- TCL (VMD)  
-- Python (WHAM)  
-- RMarkdown (figuras)  
-
-Lo incluiré próximimamente en mi GitHub como un ejemplo reproducible.
+*Camilo*

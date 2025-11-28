@@ -90,7 +90,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_meta_tags-->
   <title>Pipeline QM/MM para Umbrella Sampling: completamente automatizado</title>
 
-  <meta property="description" itemprop="description" content="Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."/>
+  <meta property="description" itemprop="description" content="Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."/>
 
 
   <!--  https://schema.org/Article -->
@@ -101,24 +101,24 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Pipeline QM/MM para Umbrella Sampling: completamente automatizado"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."/>
+  <meta property="og:description" content="Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="Pipeline QM/MM para Umbrella Sampling: completamente automatizado"/>
-  <meta property="twitter:description" content="Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."/>
+  <meta property="twitter:description" content="Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","subtitle","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Pipeline QM/MM para Umbrella Sampling: completamente automatizado"]},{"type":"character","attributes":{},"value":["De datos crudos a ΔG en segundos"]},{"type":"character","attributes":{},"value":["Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Dr. Camilo Febres-Molina"]},{"type":"character","attributes":{},"value":["https://github.com/camilofm"]},{"type":"character","attributes":{},"value":["UNAB - Chile"]}]}]},{"type":"character","attributes":{},"value":["2025-11-28"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","subtitle","description","author","date","output","image"]}},"value":[{"type":"character","attributes":{},"value":["Pipeline QM/MM para Umbrella Sampling: completamente automatizado"]},{"type":"character","attributes":{},"value":["De datos crudos a ΔG en segundos"]},{"type":"character","attributes":{},"value":["Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Dr. Camilo Febres-Molina"]},{"type":"character","attributes":{},"value":["https://github.com/camilofm"]},{"type":"character","attributes":{},"value":["UNAB - Chile"]}]}]},{"type":"character","attributes":{},"value":["2025-11-28"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["US_RC_overlap_np.png"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["umbrella_pipeline_blog_files/anchor-4.2.2/anchor.min.js","umbrella_pipeline_blog_files/bowser-1.9.3/bowser.min.js","umbrella_pipeline_blog_files/distill-2.2.21/template.v2.js","umbrella_pipeline_blog_files/header-attrs-2.29/header-attrs.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.min.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.min.map","umbrella_pipeline_blog_files/popper-2.6.0/popper.min.js","umbrella_pipeline_blog_files/tippy-6.2.7/tippy-bundle.umd.min.js","umbrella_pipeline_blog_files/tippy-6.2.7/tippy-light-border.css","umbrella_pipeline_blog_files/tippy-6.2.7/tippy.css","umbrella_pipeline_blog_files/tippy-6.2.7/tippy.umd.min.js","umbrella_pipeline_blog_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["PMF_wham_clean_spline.png","rmsd_global_don.png","rmsd_global_prot.png","umbrella_pipeline_blog_files/anchor-4.2.2/anchor.min.js","umbrella_pipeline_blog_files/bowser-1.9.3/bowser.min.js","umbrella_pipeline_blog_files/distill-2.2.21/template.v2.js","umbrella_pipeline_blog_files/header-attrs-2.29/header-attrs.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.min.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.min.map","umbrella_pipeline_blog_files/popper-2.6.0/popper.min.js","umbrella_pipeline_blog_files/tippy-6.2.7/tippy-bundle.umd.min.js","umbrella_pipeline_blog_files/tippy-6.2.7/tippy-light-border.css","umbrella_pipeline_blog_files/tippy-6.2.7/tippy.css","umbrella_pipeline_blog_files/tippy-6.2.7/tippy.umd.min.js","umbrella_pipeline_blog_files/webcomponents-2.0.0/webcomponents.js","US_RC_overlap_np.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1521,7 +1521,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Pipeline QM/MM para Umbrella Sampling: completamente automatizado","description":"Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM.","authors":[{"author":"Dr. Camilo Febres-Molina","authorURL":"https://github.com/camilofm","affiliation":"UNAB - Chile","affiliationURL":"#","orcidID":""}],"publishedDate":"2025-11-28T00:00:00.000-03:00","citationText":"Febres-Molina, 2025"}
+{"title":"Pipeline QM/MM para Umbrella Sampling: completamente automatizado","description":"Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM.","authors":[{"author":"Dr. Camilo Febres-Molina","authorURL":"https://github.com/camilofm","affiliation":"UNAB - Chile","affiliationURL":"#","orcidID":""}],"publishedDate":"2025-11-28T00:00:00.000-03:00","citationText":"Febres-Molina, 2025"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1535,7 +1535,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p class="subtitle">De datos crudos a ΔG en segundos</p>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p>Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM.</p>
+<p>Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM.</p>
 </div>
 
 <div class="d-byline">
@@ -1549,121 +1549,105 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 body { text-align: justify; }
 </style>
 <h2 id="introducción">Introducción</h2>
-<p>En muchos trabajos de <strong>dinámica molecular híbrida QM/MM</strong>, calcular un
-perfil de energía libre (<strong>PMF</strong>) a partir de <strong>Umbrella Sampling</strong> es un
-proceso largo, repetitivo y propenso a errores manuales:</p>
+<p>Cuando trabajo con <strong>Umbrella Sampling</strong> acoplado a <strong>QM/MM</strong>, el análisis posterior puede volverse tedioso: copiar archivos desde el clúster, calcular RMSD por ventana, revisar solapamiento, preparar metadata, correr WHAM, limpiar extremos y finalmente obtener el perfil de energía libre (<strong>PMF</strong>).</p>
+<p>Y si el proyecto es grande, esto fácilmente se convierte en horas de trabajo repetitivo.</p>
+<p>Por eso decidí construir un <strong>pipeline completamente automatizado</strong> que recibe los archivos crudos (<code>*.rc</code> y <code>*_eq.dcd</code>) y produce <strong>todos los análisis y gráficos finales en aproximadamente 11 segundos</strong>.<br />
+Solo ejecuto:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> run_pipeline.sh</span></code></pre></div>
+<p>y obtengo:</p>
 <ul>
-<li>copiar cientos de archivos del clúster,<br />
+<li>RMSD global, donor y acceptor<br />
 </li>
-<li>calcular RMSD de proteína, donor y acceptor,<br />
+<li>Gráfico de solapamiento de ventanas<br />
 </li>
-<li>revisar solapamiento entre ventanas,<br />
+<li>PMF WHAM original<br />
 </li>
-<li>generar metadata,<br />
+<li>PMF limpio + spline<br />
 </li>
-<li>correr WHAM,<br />
+<li>Figuras PNG listas para manuscrito<br />
 </li>
-<li>limpiar extremos,<br />
+<li>Todos los CSV procesados<br />
 </li>
-<li>suavizar el perfil,<br />
+<li>HTMLs de diagnóstico<br />
 </li>
-<li>exportar imágenes.</li>
+<li>Todo organizado en una carpeta <code>resultados/</code></li>
 </ul>
-<p>Todo eso, <em>a mano</em>, consume horas.</p>
-<p>En este post presento un <strong>pipeline completamente automatizado</strong> que
-desarrollé para procesar las ventanas del sistema
-QM/MM (PM6/CHARMM) en mi proyecto actual.<br />
-Una vez que tengo las ventanas <code>*.rc</code> y <code>*_eq.dcd</code> en una carpeta,
-el pipeline tarda <strong>≈ 11 segundos</strong> en entregar:</p>
-<ul>
-<li>RMSD global, Donor y Acceptor (PNG)<br />
-</li>
-<li>Solapamiento de ventanas (PNG)<br />
-</li>
-<li>PMF original WHAM (PNG)<br />
-</li>
-<li>PMF limpio + spline (PNG)<br />
-</li>
-<li>Archivos CSV procesados<br />
-</li>
-<li>HTML con diagnósticos</li>
-</ul>
-<p>Todo ordenado automáticamente en una carpeta <code>resultados/</code>.</p>
+<p>Mi intención con este post es compartir la estructura y lógica del pipeline, por si a alguien más le resulta útil.</p>
 <hr />
-<h2 id="el-pipeline-visión-general">El pipeline: visión general</h2>
-<p>El flujo completo está diseñado para ejecutarse con <strong>un solo comando</strong>:</p>
-<pre><code>bash run_pipeline.sh</code></pre>
-<p>Este script llama secuencialmente a:</p>
+<h2 id="qué-hace-exactamente-el-pipeline">¿Qué hace exactamente el pipeline?</h2>
+<p>El pipeline ejecuta automáticamente, en orden:</p>
 <ol type="1">
-<li><code>rmsd_windows.tcl</code> — RMSD de PROA, DON, ACC<br />
-</li>
-<li><code>rmsd_us_mep-rca.Rmd</code> — análisis y PNG<br />
-</li>
-<li><code>us_rc_overlap_np.Rmd</code> — solapamiento (PNG)<br />
-</li>
-<li><code>gen_metadata.sh</code> — metadata para WHAM<br />
-</li>
-<li><code>wham_rca_v6.py</code> — WHAM + PMF original<br />
-</li>
-<li><code>pmf_wham_final.Rmd</code> — PMF limpio + spline<br />
-</li>
-<li>Copia automática de PNG → carpeta <code>resultados/</code></li>
+<li><p><strong><code>rmsd_windows.tcl</code></strong><br />
+Calcula RMSD de la proteína (PROA), donor (DON) y acceptor (ACC) usando VMD.</p></li>
+<li><p><strong><code>rmsd_us_mep-rca.Rmd</code></strong><br />
+Procesa esos RMSD, genera los gráficos globales y figuras por ventana.</p></li>
+<li><p><strong><code>us_rc_overlap_np.Rmd</code></strong><br />
+Calcula el solapamiento entre ventanas y genera la figura de densidades.</p></li>
+<li><p><strong><code>gen_metadata.sh</code></strong><br />
+Construye el metadata que WHAM necesita (centros y constantes de fuerza).</p></li>
+<li><p><strong><code>wham_rca_v6.py</code></strong><br />
+Ejecuta WHAM 1D y produce el PMF crudo.</p></li>
+<li><p><strong><code>pmf_wham_final.Rmd</code></strong><br />
+Limpia extremos, recalibra ΔG y genera la versión final con spline.</p></li>
+<li><p><strong>Copia automática de PNG a <code>resultados/</code></strong><br />
+Así no tengo que buscar nada después.</p></li>
 </ol>
-<p>Todas estas etapas están registradas en <code>pipeline.log</code>.</p>
+<p>Cada paso queda registrado en <code>pipeline.log</code>, lo cual es muy útil para revisar o depurar.</p>
+<hr />
+<h2 id="resultados-generados-automáticamente">Resultados generados automáticamente</h2>
+<h3 id="rmsd-global">RMSD global</h3>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="rmsd_global_prot.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="rmsd_global_don.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<p><em>(Si también generas RMSD global para el acceptor, puedes añadir aquí <code>rmsd_global_acc.png</code> de la misma forma.)</em></p>
+<h3 id="solapamiento-umbrella">Solapamiento Umbrella</h3>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="US_RC_overlap_np.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<h3 id="pmf-wham-limpio-spline">PMF WHAM (limpio + spline)</h3>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="PMF_wham_clean_spline.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
 <hr />
 <h2 id="arquitectura-del-script-maestro">Arquitectura del script maestro</h2>
-<p>A continuación un extracto simplificado del script <code>run_pipeline.sh</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">run_step</span> <span class="st">&quot;3. Generar solapamiento de RC&quot;</span> <span class="dt">\</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  env RSTUDIO_PANDOC=<span class="st">&quot;</span><span class="va">$PANDOC_BIN</span><span class="st">&quot;</span> <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  Rscript <span class="at">-e</span> <span class="st">&quot;rmarkdown::render(&#39;us_rc_overlap_np.Rmd&#39;, quiet = TRUE)&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">run_step</span> <span class="st">&quot;7. Copiar imágenes finales&quot;</span> <span class="dt">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  bash copy_outputs.sh</span></code></pre></div>
-<p>El diseño modular permite ajustar fácilmente cualquier etapa sin romper
-las otras.</p>
+<p>El corazón del flujo es <code>run_pipeline.sh</code>.<br />
+Aquí va un extracto muy simplificado:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">run_step</span> <span class="st">&quot;3. Generar solapamiento de RC&quot;</span>   env RSTUDIO_PANDOC=<span class="st">&quot;</span><span class="va">$PANDOC_BIN</span><span class="st">&quot;</span>   Rscript <span class="at">-e</span> <span class="st">&quot;rmarkdown::render(&#39;us_rc_overlap_np.Rmd&#39;, quiet = TRUE)&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">run_step</span> <span class="st">&quot;7. Copiar imágenes finales&quot;</span>   bash copy_outputs.sh</span></code></pre></div>
+<p>Todo está encapsulado en funciones y logs, así que si algo falla, el pipeline se detiene mostrando el paso exacto.</p>
 <hr />
-<h2 id="resultados-producidos-automáticamente">Resultados producidos automáticamente</h2>
-<p>Los archivos finales que produce el pipeline incluyen:</p>
-<h3 id="rmsd">✔️ RMSD</h3>
-<pre><code>rmsd_prot_all.png
-rmsd_don_all.png
-rmsd_acc_all.png</code></pre>
-<h3 id="solapamiento-de-las-ventanas">✔️ Solapamiento de las ventanas</h3>
-<pre><code>us_overlap_density.png</code></pre>
-<h3 id="pmf-wham-crudo-y-limpio">✔️ PMF WHAM (crudo y limpio)</h3>
-<pre><code>pmf_wham_original.png
-pmf_wham_clean.png</code></pre>
-<p>Todos se copian a:</p>
-<pre><code>resultados/</code></pre>
-<hr />
-<h2 id="por-qué-este-pipeline-es-valioso">¿Por qué este pipeline es valioso?</h2>
+<h2 id="por-qué-es-útil-este-pipeline">¿Por qué es útil este pipeline?</h2>
+<p>Porque evita una gran cantidad de pasos manuales que normalmente dispersan tiempo y energía.</p>
 <ul>
-<li>Ahorra <strong>horas</strong> de trabajo repetitivo.<br />
+<li>Evita errores humanos.<br />
 </li>
-<li>Elimina errores humanos en el copiado/pegado.<br />
+<li>Hace el análisis reproducible.<br />
 </li>
-<li>Estándar reproducible para futuros artículos o estudiantes.<br />
+<li>Permite reanalizar nuevas ventanas cambiando <em>solo un comando</em>.<br />
 </li>
-<li>Totalmente portable entre proyectos (solo cambiar nombres PSF/DCD).<br />
+<li>Produce figuras de calidad publicable sin intervención manual.<br />
 </li>
-<li>Produce figuras listas para un manuscrito.</li>
+<li>Sirve como “plantilla” para futuros proyectos similares.</li>
 </ul>
-<p>Este pipeline nació como herramienta interna, pero se ha convertido en
-parte fundamental de mi flujo de trabajo QM/MM para enzimas.</p>
+<p>Para mí se convirtió en una herramienta esencial dentro del trabajo QM/MM con enzimas.</p>
 <hr />
-<h2 id="archivos-y-repositorio">Archivos y repositorio</h2>
-<p>Si te interesa ver el pipeline completo, todos los scripts interoperan:</p>
-<ul>
-<li>Bash (control maestro)<br />
-</li>
-<li>TCL (VMD)<br />
-</li>
-<li>Python (WHAM)<br />
-</li>
-<li>RMarkdown (figuras)</li>
-</ul>
-<p>Lo incluiré próximimamente en mi GitHub como un ejemplo reproducible.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="descarga-de-los-scripts">Descarga de los scripts</h2>
+<p>He subido (o subiré) los archivos del pipeline a un repositorio de GitHub.<br />
+La idea es que puedas clonar el repo, adaptar un par de rutas y usarlo como base para tu propio sistema.</p>
+<p>🔗 <strong>Repositorio completo del pipeline</strong><br />
+<em>(cuando lo tenga público → reemplazo este link)</em></p>
+<p><a href="https://github.com/camilofm/umbrella-qmmm-pipeline" class="uri">https://github.com/camilofm/umbrella-qmmm-pipeline</a></p>
+<hr />
+<h2 id="cierre">Cierre</h2>
+<p>Esta versión del pipeline ya es estable y la utilizo a diario.<br />
+Si la adoptas, siéntete libre de modificarla, optimizarla o adaptarla a tus propios sistemas.<br />
+Y si quieres conversar sobre análisis QM/MM, Umbrella Sampling, TREK o rutas de reacción, siempre será un gusto.</p>
+<p><em>Camilo</em></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
