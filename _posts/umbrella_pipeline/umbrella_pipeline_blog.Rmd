@@ -1,7 +1,7 @@
 ---
 title: "Pipeline QM/MM para Umbrella Sampling: completamente automatizado"
 subtitle: "De datos crudos a ΔG en segundos"
-description: "Comparto un pipeline real para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."
+description: "Comparto un pipeline para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM."
 author:
   - name: "Dr. Camilo Febres-Molina"
     url: "https://github.com/camilofm"
