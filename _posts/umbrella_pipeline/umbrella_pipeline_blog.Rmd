@@ -141,7 +141,7 @@ Para mí se convirtió en una herramienta esencial dentro del trabajo QM/MM con 
 
 ---
 
-## Descarga de los scripts
+## Descarga de los todos scripts
 
 He subido los archivos del pipeline a un repositorio de GitHub.  
 La idea es que puedas clonar el repo, adaptar un par de rutas y usarlo como base para tu propio sistema.
