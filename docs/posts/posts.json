@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/umbrella_pipeline/",
+    "title": "Pipeline QM/MM + Umbrella Sampling completamente automatizado",
+    "description": "Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM.",
+    "author": [
+      {
+        "name": "Dr. Camilo Febres-Molina",
+        "url": "https://github.com/camilofm"
+      }
+    ],
+    "date": "2025-11-28",
+    "categories": [],
+    "contents": "\nIntroducción\nEn muchos trabajos de dinámica molecular híbrida QM/MM, calcular un\nperfil de energía libre (PMF) a partir de Umbrella Sampling es un\nproceso largo, repetitivo y propenso a errores manuales:\ncopiar cientos de archivos del clúster,\ncalcular RMSD de proteína, donor y acceptor,\nrevisar solapamiento entre ventanas,\ngenerar metadata,\ncorrer WHAM,\nlimpiar extremos,\nsuavizar el perfil,\nexportar imágenes.\nTodo eso, a mano, consume horas.\nEn este post presento un pipeline completamente automatizado que\ndesarrollé para procesar las ventanas del sistema\nQM/MM (PM6/CHARMM) en mi proyecto actual.\nUna vez que tengo las ventanas *.rc y *_eq.dcd en una carpeta,\nel pipeline tarda ≈ 11 segundos en entregar:\nRMSD global, Donor y Acceptor (PNG)\nSolapamiento de ventanas (PNG)\nPMF original WHAM (PNG)\nPMF limpio + spline (PNG)\nArchivos CSV procesados\nHTML con diagnósticos\nTodo ordenado automáticamente en una carpeta resultados/.\nEl pipeline: visión general\nEl flujo completo está diseñado para ejecutarse con un solo comando:\nbash run_pipeline.sh\nEste script llama secuencialmente a:\nrmsd_windows.tcl — RMSD de PROA, DON, ACC\nrmsd_us_mep-rca.Rmd — análisis y PNG\nus_rc_overlap_np.Rmd — solapamiento (PNG)\ngen_metadata.sh — metadata para WHAM\nwham_rca_v6.py — WHAM + PMF original\npmf_wham_final.Rmd — PMF limpio + spline\nCopia automática de PNG → carpeta resultados/\nTodas estas etapas están registradas en pipeline.log.\nArquitectura del script maestro\nA continuación un extracto simplificado del script run_pipeline.sh:\nrun_step \"3. Generar solapamiento de RC\" \\\n  env RSTUDIO_PANDOC=\"$PANDOC_BIN\" \\\n  Rscript -e \"rmarkdown::render('us_rc_overlap_np.Rmd', quiet = TRUE)\"\n\nrun_step \"7. Copiar imágenes finales\" \\\n  bash copy_outputs.sh\nEl diseño modular permite ajustar fácilmente cualquier etapa sin romper\nlas otras.\nResultados producidos automáticamente\nLos archivos finales que produce el pipeline incluyen:\n✔️ RMSD\nrmsd_prot_all.png\nrmsd_don_all.png\nrmsd_acc_all.png\n✔️ Solapamiento de las ventanas\nus_overlap_density.png\n✔️ PMF WHAM (crudo y limpio)\npmf_wham_original.png\npmf_wham_clean.png\nTodos se copian a:\nresultados/\n¿Por qué este pipeline es valioso?\nAhorra horas de trabajo repetitivo.\nElimina errores humanos en el copiado/pegado.\nEstándar reproducible para futuros artículos o estudiantes.\nTotalmente portable entre proyectos (solo cambiar nombres PSF/DCD).\nProduce figuras listas para un manuscrito.\nEste pipeline nació como herramienta interna, pero se ha convertido en\nparte fundamental de mi flujo de trabajo QM/MM para enzimas.\nArchivos y repositorio\nSi te interesa ver el pipeline completo, todos los scripts interoperan:\nBash (control maestro)\nTCL (VMD)\nPython (WHAM)\nRMarkdown (figuras)\nLo incluiré próximimamente en mi GitHub como un ejemplo reproducible.\n\n\n\n",
+    "preview": {},
+    "last_modified": "2025-11-28T15:55:15-03:00",
+    "input_file": "umbrella_pipeline_blog.knit.md"
+  },
+  {
     "path": "posts/qmmm/",
     "title": "QM/MM: La Fusión de lo Cuántico y Molecular",
     "description": "Descubre cómo la combinación de Mecánica Cuántica y Molecular permite estudiar reacciones químicas complejas, como las que ocurren en enzimas, logrando una precisión a nivel cuántico que antes era inalcanzable en sistemas de gran tamaño.",

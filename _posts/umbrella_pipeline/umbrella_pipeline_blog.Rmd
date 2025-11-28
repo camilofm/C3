@@ -1,0 +1,145 @@
+---
+title: "Pipeline QM/MM + Umbrella Sampling completamente automatizado"
+subtitle: "De datos crudos a ΔG en segundos"
+description: "Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."
+author:
+  - name: "Dr. Camilo Febres-Molina"
+    url: "https://github.com/camilofm"
+    affiliation: "UNAB - Chile"
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+<style>
+body { text-align: justify; }
+</style>
+
+## Introducción
+
+En muchos trabajos de **dinámica molecular híbrida QM/MM**, calcular un
+perfil de energía libre (**PMF**) a partir de **Umbrella Sampling** es un
+proceso largo, repetitivo y propenso a errores manuales:
+
+- copiar cientos de archivos del clúster,  
+- calcular RMSD de proteína, donor y acceptor,  
+- revisar solapamiento entre ventanas,  
+- generar metadata,  
+- correr WHAM,  
+- limpiar extremos,  
+- suavizar el perfil,  
+- exportar imágenes.  
+
+Todo eso, *a mano*, consume horas.
+
+En este post presento un **pipeline completamente automatizado** que
+desarrollé para procesar las ventanas del sistema
+QM/MM (PM6/CHARMM) en mi proyecto actual.  
+Una vez que tengo las ventanas `*.rc` y `*_eq.dcd` en una carpeta,
+el pipeline tarda **≈ 11 segundos** en entregar:
+
+- RMSD global, Donor y Acceptor (PNG)  
+- Solapamiento de ventanas (PNG)  
+- PMF original WHAM (PNG)  
+- PMF limpio + spline (PNG)  
+- Archivos CSV procesados  
+- HTML con diagnósticos  
+
+Todo ordenado automáticamente en una carpeta `resultados/`.
+
+---
+
+## El pipeline: visión general
+
+El flujo completo está diseñado para ejecutarse con **un solo comando**:
+
+```
+bash run_pipeline.sh
+```
+
+Este script llama secuencialmente a:
+
+1. `rmsd_windows.tcl` — RMSD de PROA, DON, ACC  
+2. `rmsd_us_mep-rca.Rmd` — análisis y PNG  
+3. `us_rc_overlap_np.Rmd` — solapamiento (PNG)  
+4. `gen_metadata.sh` — metadata para WHAM  
+5. `wham_rca_v6.py` — WHAM + PMF original  
+6. `pmf_wham_final.Rmd` — PMF limpio + spline  
+7. Copia automática de PNG → carpeta `resultados/`
+
+Todas estas etapas están registradas en `pipeline.log`.
+
+---
+
+## Arquitectura del script maestro
+
+A continuación un extracto simplificado del script `run_pipeline.sh`:
+
+```bash
+run_step "3. Generar solapamiento de RC" \
+  env RSTUDIO_PANDOC="$PANDOC_BIN" \
+  Rscript -e "rmarkdown::render('us_rc_overlap_np.Rmd', quiet = TRUE)"
+
+run_step "7. Copiar imágenes finales" \
+  bash copy_outputs.sh
+```
+
+El diseño modular permite ajustar fácilmente cualquier etapa sin romper
+las otras.
+
+---
+
+## Resultados producidos automáticamente
+
+Los archivos finales que produce el pipeline incluyen:
+
+### ✔️ RMSD
+```
+rmsd_prot_all.png
+rmsd_don_all.png
+rmsd_acc_all.png
+```
+
+### ✔️ Solapamiento de las ventanas
+```
+us_overlap_density.png
+```
+
+### ✔️ PMF WHAM (crudo y limpio)
+```
+pmf_wham_original.png
+pmf_wham_clean.png
+```
+
+Todos se copian a:
+
+```
+resultados/
+```
+
+---
+
+## ¿Por qué este pipeline es valioso?
+
+- Ahorra **horas** de trabajo repetitivo.  
+- Elimina errores humanos en el copiado/pegado.  
+- Estándar reproducible para futuros artículos o estudiantes.  
+- Totalmente portable entre proyectos (solo cambiar nombres PSF/DCD).  
+- Produce figuras listas para un manuscrito.
+
+Este pipeline nació como herramienta interna, pero se ha convertido en
+parte fundamental de mi flujo de trabajo QM/MM para enzimas.
+
+---
+
+## Archivos y repositorio
+
+Si te interesa ver el pipeline completo, todos los scripts interoperan:
+
+- Bash (control maestro)  
+- TCL (VMD)  
+- Python (WHAM)  
+- RMarkdown (figuras)  
+
+Lo incluiré próximimamente en mi GitHub como un ejemplo reproducible.
