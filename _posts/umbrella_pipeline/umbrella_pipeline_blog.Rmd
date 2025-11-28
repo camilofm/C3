@@ -22,7 +22,7 @@ knitr::include_graphics("US_RC_overlap_np.png")
 
 ## Introducción
 
-Cuando trabajo con **Umbrella Sampling** acoplado a **QM/MM**, el análisis posterior puede volverse tedioso: copiar archivos desde el clúster, calcular RMSD por ventana, revisar solapamiento, preparar metadata, correr WHAM, limpiar extremos y finalmente obtener el perfil de energía libre (**PMF**).
+Cuando se trabaja con **Umbrella Sampling** acoplado a **QM/MM**, el análisis posterior puede volverse tedioso: copiar archivos desde el clúster, calcular RMSD por ventana, revisar solapamiento, preparar metadata, correr WHAM, limpiar extremos y finalmente obtener el perfil de energía libre (**PMF**).
 
 Y si el proyecto es grande, esto fácilmente se convierte en horas de trabajo repetitivo.
 
@@ -120,7 +120,7 @@ Todo está encapsulado en funciones y logs, así que si algo falla, el pipeline 
 
 ---
 
-## ¿Por qué es útil este pipeline?
+## Este pipeline es útil porque...
 
 Porque evita una gran cantidad de pasos manuales que normalmente dispersan tiempo y energía.
 

@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["PMF_wham_clean_spline.png","rmsd_global_don.png","rmsd_global_prot.png","US_RC_overlap_np.png"]}
+  {"type":"character","attributes":{},"value":["PMF_wham_clean_spline.png","rmsd_global_don.png","rmsd_global_prot.png","umbrella_pipeline_blog_files/anchor-4.2.2/anchor.min.js","umbrella_pipeline_blog_files/bowser-1.9.3/bowser.min.js","umbrella_pipeline_blog_files/distill-2.2.21/template.v2.js","umbrella_pipeline_blog_files/header-attrs-2.29/header-attrs.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.min.js","umbrella_pipeline_blog_files/jquery-3.6.0/jquery-3.6.0.min.map","umbrella_pipeline_blog_files/popper-2.6.0/popper.min.js","umbrella_pipeline_blog_files/tippy-6.2.7/tippy-bundle.umd.min.js","umbrella_pipeline_blog_files/tippy-6.2.7/tippy-light-border.css","umbrella_pipeline_blog_files/tippy-6.2.7/tippy.css","umbrella_pipeline_blog_files/tippy-6.2.7/tippy.umd.min.js","umbrella_pipeline_blog_files/webcomponents-2.0.0/webcomponents.js","US_RC_overlap_np.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1552,7 +1552,7 @@ body { text-align: justify; }
 <p><img src="US_RC_overlap_np.png" width="50%" style="display: block; margin: auto;" /></p>
 </div>
 <h2 id="introducción">Introducción</h2>
-<p>Cuando trabajo con <strong>Umbrella Sampling</strong> acoplado a <strong>QM/MM</strong>, el análisis posterior puede volverse tedioso: copiar archivos desde el clúster, calcular RMSD por ventana, revisar solapamiento, preparar metadata, correr WHAM, limpiar extremos y finalmente obtener el perfil de energía libre (<strong>PMF</strong>).</p>
+<p>Cuando se trabaja con <strong>Umbrella Sampling</strong> acoplado a <strong>QM/MM</strong>, el análisis posterior puede volverse tedioso: copiar archivos desde el clúster, calcular RMSD por ventana, revisar solapamiento, preparar metadata, correr WHAM, limpiar extremos y finalmente obtener el perfil de energía libre (<strong>PMF</strong>).</p>
 <p>Y si el proyecto es grande, esto fácilmente se convierte en horas de trabajo repetitivo.</p>
 <p>Por eso decidí construir un <strong>pipeline completamente automatizado</strong> que recibe los archivos crudos (<code>*.rc</code> y <code>*_eq.dcd</code>) y produce <strong>todos los análisis y gráficos finales en aproximadamente 11 segundos</strong>.<br />
 Solo ejecuto:</p>
@@ -1623,7 +1623,7 @@ Aquí va un extracto muy simplificado:</p>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">run_step</span> <span class="st">&quot;7. Copiar imágenes finales&quot;</span>   bash copy_outputs.sh</span></code></pre></div>
 <p>Todo está encapsulado en funciones y logs, así que si algo falla, el pipeline se detiene mostrando el paso exacto.</p>
 <hr />
-<h2 id="por-qué-es-útil-este-pipeline">¿Por qué es útil este pipeline?</h2>
+<h2 id="este-pipeline-es-útil-porque">Este pipeline es útil porque…</h2>
 <p>Porque evita una gran cantidad de pasos manuales que normalmente dispersan tiempo y energía.</p>
 <ul>
 <li>Evita errores humanos.<br />
