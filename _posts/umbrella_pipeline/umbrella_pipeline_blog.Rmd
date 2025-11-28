@@ -1,5 +1,5 @@
 ---
-title: "Pipeline QM/MM + Umbrella Sampling completamente automatizado"
+title: "Pipeline QM/MM para Umbrella Sampling: completamente automatizado"
 subtitle: "De datos crudos a ΔG en segundos"
 description: "Mostramos un pipeline real para procesar ventanas Umbrella Sampling (n/p), desde RMSD y solapamiento hasta WHAM y PMF, usando QMMM PM6/CHARMM."
 author:
