@@ -88,635 +88,39 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>C3: El Blog de Química Computacional de Camilo:     C³</title>
+  <title>Breve Historia de la Química Computacional</title>
+
+  <meta property="description" itemprop="description" content="Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna."/>
 
 
-
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2026-01-02"/>
+  <meta property="article:created" itemprop="dateCreated" content="2026-01-02"/>
+  <meta name="article:author" content="Dr. Camilo Febres-Molina"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="C3: El Blog de Química Computacional de Camilo:     C³"/>
+  <meta property="og:title" content="Breve Historia de la Química Computacional"/>
   <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="C3"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="C3: El Blog de Química Computacional de Camilo:     C³"/>
+  <meta property="twitter:title" content="Breve Historia de la Química Computacional"/>
+  <meta property="twitter:description" content="Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna."/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["El Blog de Química Computacional de Camilo:     C³"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","subtitle","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Breve Historia de la Química Computacional"]},{"type":"character","attributes":{},"value":["De los cuantos de energía a la era del diseño de proteínas"]},{"type":"character","attributes":{},"value":["Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Dr. Camilo Febres-Molina"]},{"type":"character","attributes":{},"value":["https://github.com/camilofm"]},{"type":"character","attributes":{},"value":["UNAB - Chile"]}]}]},{"type":"character","attributes":{},"value":["2026-01-02"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["2026-01-02-breve-historia-quimica-computacional_files/anchor-4.2.2/anchor.min.js","2026-01-02-breve-historia-quimica-computacional_files/bowser-1.9.3/bowser.min.js","2026-01-02-breve-historia-quimica-computacional_files/distill-2.2.21/template.v2.js","2026-01-02-breve-historia-quimica-computacional_files/header-attrs-2.29/header-attrs.js","2026-01-02-breve-historia-quimica-computacional_files/jquery-3.6.0/jquery-3.6.0.js","2026-01-02-breve-historia-quimica-computacional_files/jquery-3.6.0/jquery-3.6.0.min.js","2026-01-02-breve-historia-quimica-computacional_files/jquery-3.6.0/jquery-3.6.0.min.map","2026-01-02-breve-historia-quimica-computacional_files/popper-2.6.0/popper.min.js","2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy-bundle.umd.min.js","2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy-light-border.css","2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy.css","2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy.umd.min.js","2026-01-02-breve-historia-quimica-computacional_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
   <!--radix_placeholder_navigation_in_header-->
-  <meta name="distill:offset" content=""/>
-
-  <script type="application/javascript">
-
-    window.headroom_prevent_pin = false;
-
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        tolerance: 5,
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
-  </script>
-
-  <style type="text/css">
-
-  /* Theme (user-documented overrideables for nav appearance) */
-
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #0F2E3D;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-
-  .distill-site-header {
-
-  }
-
-  .distill-site-footer {
-
-  }
-
-
-  /* Site Header */
-
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-
-
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-
-  .distill-site-header .title {
-    font-size: 18px;
-    min-width: 150px;
-  }
-
-  .distill-site-header .logo {
-    padding: 0;
-  }
-
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-
-
-
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-
-
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-dropdown-active {
-    display: block;
-  }
-
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative; min-height: 500px; }
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-  /* Site Footer */
-
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Headroom */
-
-  d-title {
-    padding-top: 6rem;
-  }
-
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-
-  .headroom--unpinned {
-    top: -100px;
-  }
-
-  .headroom--pinned {
-    top: 0;
-  }
-
-  /* adjust viewport for navbar height */
-  /* helps vertically center bootstrap (non-distill) content */
-  .min-vh-100 {
-    min-height: calc(100vh - 100px) !important;
-  }
-
-  </style>
-
-  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
-  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-  <script type="application/javascript">
-
-  function getMeta(metaName) {
-    var metas = document.getElementsByTagName('meta');
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-    return '';
-  }
-
-  function offsetURL(url) {
-    var offset = getMeta('distill:offset');
-    return offset ? offset + '/' + url : url;
-  }
-
-  function createFuseIndex() {
-
-    // create fuse index
-    var options = {
-      keys: [
-        { name: 'title', weight: 20 },
-        { name: 'categories', weight: 15 },
-        { name: 'description', weight: 10 },
-        { name: 'contents', weight: 5 },
-      ],
-      ignoreLocation: true,
-      threshold: 0
-    };
-    var fuse = new window.Fuse([], options);
-
-    // fetch the main search.json
-    return fetch(offsetURL('search.json'))
-      .then(function(response) {
-        if (response.status == 200) {
-          return response.json().then(function(json) {
-            // index main articles
-            json.articles.forEach(function(article) {
-              fuse.add(article);
-            });
-            // download collections and index their articles
-            return Promise.all(json.collections.map(function(collection) {
-              return fetch(offsetURL(collection)).then(function(response) {
-                if (response.status === 200) {
-                  return response.json().then(function(articles) {
-                    articles.forEach(function(article) {
-                      fuse.add(article);
-                    });
-                  })
-                } else {
-                  return Promise.reject(
-                    new Error('Unexpected status from search index request: ' +
-                              response.status)
-                  );
-                }
-              });
-            })).then(function() {
-              return fuse;
-            });
-          });
-
-        } else {
-          return Promise.reject(
-            new Error('Unexpected status from search index request: ' +
-                        response.status)
-          );
-        }
-      });
-  }
-
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-
-    // get search element (bail if we don't have one)
-    var searchEl = window.document.getElementById('distill-search');
-    if (!searchEl)
-      return;
-
-    createFuseIndex()
-      .then(function(fuse) {
-
-        // make search box visible
-        searchEl.classList.remove('hidden');
-
-        // initialize autocomplete
-        var options = {
-          autoselect: true,
-          hint: false,
-          minLength: 2,
-        };
-        window.autocomplete(searchEl, options, [{
-          source: function(query, callback) {
-            const searchOptions = {
-              isCaseSensitive: false,
-              shouldSort: true,
-              minMatchCharLength: 2,
-              limit: 10,
-            };
-            var results = fuse.search(query, searchOptions);
-            callback(results
-              .map(function(result) { return result.item; })
-            );
-          },
-          templates: {
-            suggestion: function(suggestion) {
-              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-                : '';
-              var html = `
-                <div class="search-item">
-                  <h3>${suggestion.title}</h3>
-                  <div class="search-item-description">
-                    ${suggestion.description || ''}
-                  </div>
-                  <div class="search-item-preview">
-                    ${img}
-                  </div>
-                </div>
-              `;
-              return html;
-            }
-          }
-        }]).on('autocomplete:selected', function(event, suggestion) {
-          window.location.href = offsetURL(suggestion.path);
-        });
-        // remove inline display style on autocompleter (we want to
-        // manage responsive display via css)
-        $('.algolia-autocomplete').css("display", "");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-  });
-
-  </script>
-
-  <style type="text/css">
-
-  .nav-search {
-    font-size: x-small;
-  }
-
-  /* Algolioa Autocomplete */
-
-  .algolia-autocomplete {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: sub;
-    background-color: white;
-    color: black;
-    padding: 6px;
-    padding-top: 8px;
-    padding-bottom: 0;
-    border-radius: 6px;
-    border: 1px #0F2E3D solid;
-    width: 180px;
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-nav .algolia-autocomplete {
-      display: none;
-      visibility: hidden;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete {
-      display: inline-block;
-      visibility: visible;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-      margin-left: 0;
-      width: 400px;
-      max-height: 400px;
-    }
-  }
-
-  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-    width: 90%;
-    outline: none;
-    border: none;
-  }
-
-  .algolia-autocomplete .aa-hint {
-    color: #999;
-  }
-  .algolia-autocomplete .aa-dropdown-menu {
-    width: 550px;
-    max-height: 70vh;
-    overflow-x: visible;
-    overflow-y: scroll;
-    padding: 5px;
-    margin-top: 3px;
-    margin-left: -150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #999;
-    border-top: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-    cursor: pointer;
-    padding: 5px 4px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-    overflow: hidden;
-    font-size: 0.8em;
-    line-height: 1.4em;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-    font-size: 1rem;
-    margin-block-start: 0;
-    margin-block-end: 5px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-    display: inline-block;
-    overflow: hidden;
-    height: 2.8em;
-    width: 80%;
-    margin-right: 4%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-    display: inline-block;
-    width: 15%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-    height: 3em;
-    width: auto;
-    display: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-    display: initial;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-    background-color: #eee;
-  }
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  </style>
-
-
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -2096,318 +1500,78 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
-  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/header-attrs-2.29/header-attrs.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/popper-2.6.0/popper.min.js"></script>
+  <link href="2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="2026-01-02-breve-historia-quimica-computacional_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"El Blog de Química Computacional de Camilo:     C³","authors":[]}
+{"title":"Breve Historia de la Química Computacional","description":"Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna.","authors":[{"author":"Dr. Camilo Febres-Molina","authorURL":"https://github.com/camilofm","affiliation":"UNAB - Chile","affiliationURL":"#","orcidID":""}],"publishedDate":"2026-01-02T00:00:00.000-05:00","citationText":"Febres-Molina, 2026"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">C3</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).on("load", function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
-      page_category = decodeURIComponent(page_category)
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
-
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = (page_category || '').toLowerCase() === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-apply-limit l-page">
-<div class="posts-list">
-<h1 class="posts-list-caption" data-caption="El Blog de Química Computacional de Camilo:     C³">El Blog de Química Computacional de Camilo:     C³</h1>
-<a href="posts/historia_qc/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Jan. 2, 2026</div>
-<div class="dt-authors">
-<div class="dt-author">Dr. Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail"></div>
-<div class="description">
-<h2>Breve Historia de la Química Computacional</h2>
-<div class="dt-tags"></div>
-<p>Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna.</p>
-</div>
-</a>
-<a href="posts/umbrella_pipeline/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Nov. 28, 2025</div>
-<div class="dt-authors">
-<div class="dt-author">Dr. Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/umbrella_pipeline/US_RC_overlap_np.png"/>
-</div>
-<div class="description">
-<h2>Pipeline QM/MM para Umbrella Sampling: completamente automatizado</h2>
-<div class="dt-tags"></div>
-<p>Comparto un pipeline para procesar ventanas de Umbrella Sampling, desde RMSD y solapamiento hasta WHAM y PMF, todo automatizado para QMMM PM6/CHARMM.</p>
-</div>
-</a>
-<a href="posts/qmmm/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Nov. 24, 2024</div>
-<div class="dt-authors">
-<div class="dt-author">Dr. Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/qmmm/qm-mm_white-bg.png"/>
-</div>
-<div class="description">
-<h2>QM/MM: La Fusión de lo Cuántico y Molecular</h2>
-<div class="dt-tags"></div>
-<p>Descubre cómo la combinación de Mecánica Cuántica y Molecular permite estudiar reacciones químicas complejas, como las que ocurren en enzimas, logrando una precisión a nivel cuántico que antes era inalcanzable en sistemas de gran tamaño.</p>
-</div>
-</a>
-<a href="posts/AIM/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">July 6, 2024</div>
-<div class="dt-authors">
-<div class="dt-author">Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/AIM/pictures/aim.png"/>
-</div>
-<div class="description">
-<h2>La Teoría de Átomos en Moléculas (AIM - en Inglés)</h2>
-<div class="dt-tags"></div>
-<p>La Teoría de Átomos en Moléculas (AIM) es una herramienta poderosa creada por Richard F. W. Bader en los años 70 y 80. Esta teoría redefine cómo vemos los átomos en una molécula usando la densidad electrónica. Identificando puntos críticos y superficies de cero flujo, AIM desentraña cómo los átomos interactúan dentro de las moléculas, revolucionando nuestra comprensión de la estructura y reactividad química.  
-¡Una joya para la química teórica y computacional!</p>
-</div>
-</a>
-<a href="posts/us_scripts_files/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Sept. 20, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/us_scripts_files/pictures/code.png"/>
-</div>
-<div class="description">
-<h2>Scripts en Bash para realizar cálculos Umbrella Sampling (QM/MM MD)</h2>
-<div class="dt-tags"></div>
-<p>En este post presento dos scripts que sirven para generar los archivos de entrada para poder correr cálculos de Umbrella Sampling en sistemas proteína-ligando y utilizando la interfaz CHARMM-Gaussian, dado que el nivel de teoría a utilizar será SCC-DFTB/CHARMM.</p>
-</div>
-</a>
-<a href="posts/tutorial_bfee/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Sept. 1, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/tutorial_bfee/pictures/bfee.png"/>
-</div>
-<div class="description">
-<h2>Estimador de Energía Libre de Unión para sistemas proteína-ligando (BFEE - Plugin de VMD): Tutorial de uso</h2>
-<div class="dt-tags"></div>
-<p>Aquí veremos cómo utilizar el Plugin BFEE de VMD de manera sencilla para generar archivos de entrada y así poder correr los cálculos MD del sistema en estudio y así obtener el &amp;Delta;Gº de unión por medio del Potencial de Fuerza Medio (PMF).</p>
-</div>
-</a>
-<a href="posts/tutorial_gromacs/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 25, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Dr. Camilo Febres-Molina</div>
-</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/tutorial_gromacs/pictures/gromacs.png"/>
-</div>
-<div class="description">
-<h2>Análisis post producción de la dinámica molecular con Gromacs - Tutorial</h2>
-<div class="dt-tags"></div>
-<p>Aquí veremos paso a paso cómo es que podemos utilizar la suite Gromacs para el análisis post producción de una dinámica molecular realizada con los programas Gromacs, CHARMM o NAMD.</p>
-</div>
-</a>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>El Blog de Química Computacional de Camilo: C³</h1>
-
+<h1>Breve Historia de la Química Computacional</h1>
+<p class="subtitle">De los cuantos de energía a la era del diseño de proteínas</p>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-
+<p>Un recorrido por las ideas y Premios Nobel que construyeron las bases de la Química Computacional moderna.</p>
 </div>
 
+<div class="d-byline">
+  Dr. Camilo Febres-Molina <a href="https://github.com/camilofm" class="uri">https://github.com/camilofm</a> (UNAB - Chile)
+  
+<br/>2026-01-02
+</div>
 
 <div class="d-article">
+<style>
+body {
+text-align: justify}
+</style>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>La química computacional es, en esencia, hacer química con matemáticas y computadores. Su propósito no es “hacer dibujitos bonitos” de moléculas, sino calcular propiedades moleculares (energías, geometrías, espectros, cargas, barreras de reacción) o simular el comportamiento molecular (cómo se mueven los átomos, cómo se estabiliza un complejo, cómo progresa una reacción). Esa definición, curiosamente sobria, es muy parecida a la de IUPAC: una disciplina que usa métodos matemáticos para calcular propiedades o simular el comportamiento molecular (ver la entrada “Computational chemistry” en el Gold Book de IUPAC: <a href="https://goldbook.iupac.org/terms/view/C01370" class="uri">https://goldbook.iupac.org/terms/view/C01370</a>). En otras palabras: es una caja de herramientas para responder preguntas químicas cuando el experimento es difícil, caro, peligroso, lento o simplemente no alcanza a ver lo que ocurre a nivel atómico.</p>
+<p>Ahora, “computacional” suena a que todo vale, y ahí aparece la confusión. La química computacional no es sinónimo de bioinformática, aunque ambas usen computación. La bioinformática, en la definición de IUPAC, se centra en desarrollar y usar herramientas computacionales para almacenar, analizar e interpretar datos biológicos (por ejemplo, secuencias de genes o proteínas, anotaciones, búsquedas y alineamientos; ver “Bioinformatics” en el Gold Book: <a href="https://goldbook.iupac.org/terms/view/B00680" class="uri">https://goldbook.iupac.org/terms/view/B00680</a>). Es más “datos y patrones a gran escala”. La química computacional, en cambio, suele estar más cerca de “modelos físicos y químicos” (electrones, fuerzas, energía, dinámica), aunque hoy convive felizmente con el mundo de datos.</p>
+<p>Tampoco es idéntica a la biofísica. La biofísica es un paraguas enorme: la aplicación de principios y métodos de la física para entender sistemas biológicos (por ejemplo, la definición general en Britannica: <a href="https://www.britannica.com/science/biophysics" class="uri">https://www.britannica.com/science/biophysics</a>). Dentro de la biofísica existe la biofísica computacional, que usa simulaciones (por ejemplo, dinámica molecular) para estudiar movimiento y función de biomoléculas. Ahí hay superposición real: cuando la química computacional se mete en proteínas, membranas o enzimas, muchas veces estás trabajando en esa frontera compartida. La diferencia práctica no es “quién tiene la razón”, sino qué preguntas mandan: si la pregunta es principalmente química (mecanismos, reactividad, enlaces, energía), la brújula apunta a química computacional; si la pregunta es principalmente biológica/física (función, conformaciones, ensamblajes, transporte), suena más a biofísica.</p>
+<p>Con esa idea clara, se entiende mejor el resto del viaje: la química computacional no apareció de la nada, sino como el resultado de una cadena de ideas que fueron construyendo el piso. Primero hubo que aceptar que la energía viene en “paquetes”; luego hubo que inventar el lenguaje matemático para describir electrones; después, conectar esa matemática con observables; más tarde, transformar todo eso en reglas químicas sobre enlaces y reactividad; y finalmente, convertirlo en métodos prácticos que escalen desde moléculas pequeñas hasta proteínas completas. Esa escalera intelectual es justamente la que se ve, con una claridad casi cinematográfica, cuando uno mira cronológicamente varios Premios Nobel que, sin proponérselo como “plan maestro”, terminaron cimentando lo que hoy llamamos química computacional.</p>
+<p>En lo que sigue, voy a recorrer esa historia usando una guía simple: cada Nobel como un ladrillo, y cada ladrillo como una idea que hoy vive dentro de los cálculos que hacemos en un computador. No para idolatrar premios, sino para mostrar cómo se fue armando el mapa: desde los cuantos de energía, pasando por la mecánica cuántica y la ecuación de Schrödinger, hasta la teoría del funcional de la densidad (DFT, por sus siglas en inglés: Density Functional Theory) y los modelos híbridos mecánica cuántica/mecánica molecular (QM/MM, mecánica cuántica / mecánica molecular), y llegando al presente, donde el diseño y la predicción de estructuras de proteínas aceleran el punto de partida de muchas investigaciones.</p>
+<h2 id="una-línea-de-tiempo-contada-con-nobel-y-con-química">Una línea de tiempo, contada con Nobel (y con química)</h2>
+<p>En 1918, Max Planck ganó el Premio Nobel en Física por el trabajo relacionado con el descubrimiento de los cuantos de energía. Esto pone la primera piedra: en el mundo microscópico la energía no cambia de forma continua, sino en “paquetes”. Dicho simple: no puedes subir la energía de a poquito como una perilla, sino en saltos discretos. Y esa sola idea ya explica por qué átomos y moléculas tienen niveles de energía definidos. Hoy, cuando usamos computadores para calcular energías, estructuras y propiedades electrónicas, todo eso se apoya en esta base, dentro de lo que se conoce como química cuántica (QC).</p>
+<p>En 1932, Werner Heisenberg, también en Física, recibe el Nobel por su aporte a la creación de la mecánica cuántica. Esto es relevante porque una de las formas más influyentes de escribir esa teoría es la formulación matricial: usar matrices (tablas de números) para representar cantidades físicas, con reglas de multiplicación que no siempre “conmutan” (es decir, A·B no necesariamente es igual a B·A). Suena abstracto, pero es extremadamente práctico: el cómputo moderno en química se apoya muchísimo en álgebra lineal, que en el fondo es construir matrices y extraer información de ellas (como energías y estados posibles) a través de operaciones matemáticas bien definidas.</p>
+<p>En 1933, Erwin Schrödinger y Paul Dirac ganan el Nobel en Física por nuevas formas productivas de la teoría atómica. Schrödinger introduce la ecuación que gobierna cómo se comportan los electrones en átomos y moléculas, describiéndolos con una función tipo “onda”. En la práctica, gran parte de la química computacional vive intentando resolver esa ecuación (o, siendo honestos, aproximarla de manera inteligente), porque resolverla exactamente para moléculas reales es prácticamente imposible. Dirac, por su parte, fortalece el lenguaje matemático moderno de la mecánica cuántica con herramientas y notación muy usadas (la notación bra-ket, por ejemplo), y además abre la puerta a efectos relativistas importantes cuando hablamos de elementos pesados (cuando los electrones se mueven tan rápido que la relatividad empieza a importar).</p>
+<p>En 1954, Max Born y Walther Bothe ganan el Nobel en Física. Born aporta la interpretación estadística de la función de onda: en pocas palabras, conecta la matemática con algo medible. Da el puente entre una fórmula y probabilidades reales. Por ejemplo: si tienes una descripción matemática del electrón, ¿qué significa físicamente? Significa probabilidad de encontrarlo en un lugar u otro. Eso está detrás de conceptos como la densidad electrónica (cuánta “presencia electrónica”, entre comillas, hay en cada zona del espacio). Bothe, en cambio, está más del lado experimental con su método de coincidencia: no es un pilar computacional directo, pero representa el tipo de medición que permite contrastar teoría con realidad y darle músculo a lo que se modela.</p>
+<p>En ese mismo año, 1954, Linus Pauling gana el Nobel de Química por su trabajo sobre la naturaleza del enlace químico y su aplicación a estructuras complejas. Esto es fundamental en química en general, pero también lo es para la química computacional: Pauling traduce la física cuántica al idioma químico que usamos todos los días (enlaces, estructura, geometría, ideas que luego se conectan con hibridación, resonancia, electronegatividad, etc.). Y aquí hay un punto clave: en química computacional no basta con sacar números; hay que poder explicar qué significan, y Pauling ayuda a consolidar ese marco conceptual.</p>
+<p>En 1966, Robert Mulliken recibe el Nobel de Química por su aporte a enlaces y estructura electrónica mediante orbitales moleculares. Él consolida el lenguaje de los orbitales moleculares, que es una manera de describir cómo se distribuyen los electrones en una molécula. Muchísimos métodos computacionales modernos trabajan con esta idea. Y en lo cotidiano, incluso cuando se habla de “cargas” en átomos, uno de los análisis clásicos que aparece es el tipo Mulliken (las famosas cargas de Mulliken), que nacen en ese contexto de interpretar electrónicamente qué está pasando.</p>
+<p>En 1981, Kenichi Fukui y Roald Hoffmann ganan el Nobel de Química por teorías sobre el curso de las reacciones químicas. Ellos ayudan a entender por qué una reacción ocurre de una forma y no de otra. Fukui populariza la idea de mirar los orbitales frontera (los orbitales más relevantes para reaccionar, típicamente los más altos ocupados y los más bajos desocupados). Hoffmann, por otro lado, con reglas de simetría orbital, muestra que algunas reacciones están “permitidas” o “prohibidas” (entre comillas) por cómo encajan los orbitales durante el proceso. Hoy, los cálculos computacionales permiten ver esto y cuantificarlo con mucho más detalle del que se podía soñar cuando estas ideas nacieron.</p>
+<p>En 1986, Dudley R. Herschbach, Yuan T. Lee y John C. Polanyi ganan el Nobel de Química por sus contribuciones a la dinámica de procesos químicos elementales. Aquí entra fuerte el factor movimiento: una reacción no es solo un inicio y un fin, es un recorrido. Esto conecta con una idea muy visual y poderosa: la superficie de energía potencial, que puedes imaginar como un paisaje de energía. La molécula “se mueve” por ese paisaje: hay valles, hay colinas, y la barrera energética sería como una montaña que hay que superar. La química computacional usa ese paisaje para estudiar mecanismos, estimar barreras y entender qué caminos son más probables para pasar de reactivos a productos.</p>
+<p>En 1992, Rudolph A. Marcus gana el Nobel de Química por la teoría de transferencia electrónica. Esto explica cómo y cuándo un electrón “salta” de un lugar a otro, algo central en electroquímica, en reacciones de óxido-reducción y también en sistemas biológicos. Introduce una idea clave: la energía de reorganización, que es cuánto tiene que “acomodarse” el entorno (por ejemplo el solvente o la estructura alrededor) para que el salto sea favorable. Esto guía cómo se modelan procesos redox en distintos ambientes, desde soluciones hasta proteínas.</p>
+<p>En 1998, Walter Kohn y John A. Pople ganan el Nobel de Química. Este sí es el premio más directamente relacionado con lo que hoy se llama química computacional “de manual”. Kohn impulsa la Teoría del Funcional de la Densidad (DFT, por sus siglas en inglés: Density Functional Theory), una estrategia que permite calcular propiedades electrónicas con un equilibrio muy atractivo entre costo computacional y precisión. Pople, por su parte, ayuda a transformar estos cálculos en algo práctico y estandarizable, acelerando el uso de métodos computacionales en química cuántica a través de enfoques y herramientas que se incorporaron a software usado por miles de químicos (Gaussian es el ejemplo más icónico asociado a esa era).</p>
+<p>En 2013, Martin Karplus, Michael Levitt y Arieh Warshel ganan el Nobel de Química por modelos multiescala para sistemas complejos. La idea es elegante: no todo un sistema necesita el mismo nivel de detalle. Si piensas en una proteína que cataliza una reacción, no toda la proteína está “reaccionando”; la química ocurre en una zona pequeña. Entonces, ellos consolidan el enfoque de describir esa zona reactiva con mecánica cuántica (la parte donde los electrones importan directamente) y describir el resto del sistema con un modelo más simple y eficiente, típico de mecánica molecular. A esto se le conoce como QM/MM (mecánica cuántica / mecánica molecular). Este tipo de modelos permite simulaciones realistas de enzimas, catálisis, reactividad en solución y otros sistemas donde el entorno es grande e indispensable. Y sí: esto es exactamente el tipo de enfoque que yo uso en mi investigación día a día. Sin embargo, su impacto va mucho más allá de enzimas: también es clave para materiales, interfaces, catálisis heterogénea, reactividad en solventes complejos y electroquímica, entre otros.</p>
+<p>Finalmente, en 2024, David Baker, Demis Hassabis y John Jumper ganan el Nobel de Química por avances en diseño computacional de proteínas y predicción de estructura. Esto marca un salto importante: pasar de “solo tengo la secuencia” (una cadena de aminoácidos) a “tengo un modelo 3D útil” usando computación. Eso acelera el inicio de muchos estudios: acoplamiento molecular (docking), dinámica molecular y modelamiento de catálisis. Y es importante decirlo con honestidad: esto no reemplaza a la física dura de calcular energías y mecanismos (por ejemplo con DFT o con QM/MM), pero sí reduce muchísimo la barrera de entrada para estudiar sistemas biológicos complejos porque te entrega estructuras iniciales mucho más rápido y, muchas veces, con calidad sorprendente.</p>
+<h2 id="cierre">Cierre</h2>
+<p>Y aquí viene la conclusión que me gustaría que quede sonando como campana: la química computacional no es una “alternativa” al laboratorio, ni un truco moderno. Es una forma distinta de hacer la misma ciencia: poner hipótesis a prueba, pero usando modelos matemáticos y simulaciones para mirar donde el ojo no ve. Cuando está bien hecha, no reemplaza al experimento: lo acompaña, lo explica, lo desafía y, a veces, lo adelanta. Y esa mezcla de rigor y audacia es justamente lo que la hace tan poderosa para contar historias científicas que, aunque ocurren en escalas invisibles, terminan afectando todo lo visible.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
