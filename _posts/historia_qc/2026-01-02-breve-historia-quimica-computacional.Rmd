@@ -13,9 +13,12 @@ output:
 ---
 
 <style>
-body {
-text-align: justify}
+body { text-align: justify; }
 </style>
+
+```{r,out.width="95%",fig.align='center', echo=FALSE}
+knitr::include_graphics("wallpaper.png")
+```
 
 ```{r, echo=FALSE, out.width="60%", fig.align='center'}
 # Banner opcional: el post se teje igual aunque no exista la imagen.
@@ -23,7 +26,7 @@ img <- "breve_historia_qc.png"
 if (file.exists(img)) knitr::include_graphics(img)
 ```
 
-La química computacional es, en esencia, hacer química con matemáticas y computadores. Su propósito no es “hacer dibujitos bonitos” de moléculas, sino calcular propiedades moleculares (energías, geometrías, espectros, cargas, barreras de reacción) o simular el comportamiento molecular (cómo se mueven los átomos, cómo se estabiliza un complejo, cómo progresa una reacción). Esa definición, curiosamente sobria, es muy parecida a la de IUPAC: una disciplina que usa métodos matemáticos para calcular propiedades o simular el comportamiento molecular (ver la entrada “Computational chemistry” en el Gold Book de IUPAC: https://goldbook.iupac.org/terms/view/C01370). En otras palabras: es una caja de herramientas para responder preguntas químicas cuando el experimento es difícil, caro, peligroso, lento o simplemente no alcanza a ver lo que ocurre a nivel atómico.
+La química computacional es, en esencia, hacer química con matemáticas y computadores. Su propósito no es “hacer dibujos bonitos” de moléculas, sino calcular propiedades moleculares (energías, geometrías, espectros, cargas, barreras de reacción) o simular el comportamiento molecular (cómo se mueven los átomos, cómo se estabiliza un complejo, cómo progresa una reacción). Esa definición, curiosamente sobria, es muy parecida a la de IUPAC: una disciplina que usa métodos matemáticos para calcular propiedades o simular el comportamiento molecular (ver la entrada “Computational chemistry” en el Gold Book de IUPAC: https://goldbook.iupac.org/terms/view/C01370). En otras palabras: es una caja de herramientas para responder preguntas químicas cuando el experimento es difícil, caro, peligroso, lento o simplemente no alcanza a ver lo que ocurre a nivel atómico.
 
 Ahora, “computacional” suena a que todo vale, y ahí aparece la confusión. La química computacional no es sinónimo de bioinformática, aunque ambas usen computación. La bioinformática, en la definición de IUPAC, se centra en desarrollar y usar herramientas computacionales para almacenar, analizar e interpretar datos biológicos (por ejemplo, secuencias de genes o proteínas, anotaciones, búsquedas y alineamientos; ver “Bioinformatics” en el Gold Book: https://goldbook.iupac.org/terms/view/B00680). Es más “datos y patrones a gran escala”. La química computacional, en cambio, suele estar más cerca de “modelos físicos y químicos” (electrones, fuerzas, energía, dinámica), aunque hoy convive felizmente con el mundo de datos.
 
